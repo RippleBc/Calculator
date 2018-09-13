@@ -8,42 +8,31 @@
 	void yyerror(const char *s) { std::printf("Error: %s\n", s);std::exit(1); }
 %}
 
-/* Represents the many different ways we can access our data */
-%union {
-	Node *node;
-	NBlock *block;
-	NExpression *expr;
-	NStatement *stmt;
-	NIdentifier *ident;
-	NVariableDeclaration *var_decl;
-	std::vector<NVariableDeclaration*> *varvec;
-	std::vector<NExpression*> *exprvec;
-	std::string *string;
-	int token;
-}
+/* Generate YYSTYPE from these types. */ 
+%define api.value.type union 
 
 /* Define our terminal symbols (tokens). This should
    match our tokens.l lex file. We also define the node type
    they represent.
  */
-%token <string> TIDENTIFIER TINTEGER TDOUBLE
-%token <token> TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
-%token <token> TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
-%token <token> TPLUS TMINUS TMUL TDIV
-%token <token> TRETURN TEXTERN
+%token <std::string *> TIDENTIFIER TINTEGER TDOUBLE
+%token <int> TCEQ TCNE TCLT TCLE TCGT TCGE TEQUAL
+%token <int> TLPAREN TRPAREN TLBRACE TRBRACE TCOMMA TDOT
+%token <int> TPLUS TMINUS TMUL TDIV
+%token <int> TRETURN TEXTERN
 
 /* Define the type of node our nonterminal symbols represent.
    The types refer to the %union declaration above. Ex: when
    we call an ident (defined by union type ident) we are really
    calling an (NIdentifier*). It makes the compiler happy.
  */
-%type <ident> ident
-%type <expr> numeric expr 
-%type <varvec> func_decl_args
-%type <exprvec> call_args
-%type <block> program stmts block
-%type <stmt> stmt var_decl func_decl extern_decl
-%type <token> comparison
+%type <NIdentifier*> ident
+%type <NExpression*> numeric expr 
+%type <std::vector<NVariableDeclaration*> > func_decl_args
+%type <std::vector<NExpression*>*> call_args
+%type <NBlock*> program stmts block
+%type <NStatement*> stmt var_decl func_decl extern_decl
+%type <int> comparison
 
 /* Operator precedence for mathematical operators */
 %left TPLUS TMINUS
