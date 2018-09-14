@@ -31,10 +31,8 @@ do \
 	} \
 	else \
 	{ \
-		(Cur).first_line	= (Cur).last_line	= \
-		YYRHSLOC(Rhs, 0).last_line; \
-		(Cur).first_column = (Cur).last_column = \
-		YYRHSLOC(Rhs, 0).last_column; \
+		(Cur).first_line	= (Cur).last_line	= YYRHSLOC(Rhs, 0).last_line; \
+		(Cur).first_column = (Cur).last_column = YYRHSLOC(Rhs, 0).last_column; \
 	} \
 while (0)
 
@@ -48,12 +46,19 @@ void yyerror (char const *);
 %define api.value.type union /* Generate YYSTYPE from these types. */ 
 %token <double> NUM /* Simple double precision number. */
 %token <symrec*> VAR FNCT /* Symbol table pointer; variable and functioin. */
+%token <char*> STRING /* Simple string. */
 %type <double> exp
-%precedence '='
-%left '-' '+'
-%left '*' '/'
+%precedence EQU '='
+%left MIN '-' PLUS'+'
+%left MUL '*' DIV '/'
 %precedence NEG	/* negation(unary minus) */ 
-%right '^'	/* exponentiation */
+%right EXP '^'	/* exponentiation */
+
+%destructor { printf ("discard symbol width type, position %lf.\n", @$.first_line); } <*>
+%destructor { printf ("discard symbol without type, position %lf.\n", @$.first_line); } <>
+/**/
+%destructor { free ($$); printf ("discard symbol typed symrec*, position %lf.\n", @$.first_line); } <char*> 
+%destructor { printf ("discard symbol nameed NUM, position %lf.\n", @$.first_line); } NUM
 
 %%
 /* The grammar follows.	*/ 
@@ -113,6 +118,26 @@ getsym (char const *sym_name)
 		if (strcmp (ptr->name, sym_name) == 0) 
 			return ptr;
 	return 0;
+}
+
+symrec *
+removesym (char const *sym_name)
+{
+	symrec *pre_ptr = ((void *)0);
+	symrec *ptr = sym_table;
+	while (ptr != (symrec *) 0) {
+		if (strcmp (ptr->name, sym_name) == 0) 
+			break;
+		pre_ptr = ptr;
+		ptr = (symrec *)ptr->next;
+	}
+	
+	if (pre_ptr) 
+	{
+		pre_ptr->next = ptr->next;
+	}
+
+	free(ptr);
 }
 
 /* Called by yyparse on error.	*/ 

@@ -21,3 +21,4 @@ extern symrec *sym_table;
 
 symrec *putsym (char const *, int); 
 symrec *getsym (char const *);
+symrec *removesym (char const *);
