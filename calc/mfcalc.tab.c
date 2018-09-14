@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 3 "mfcalc.y" /* yacc.c:339  */
+#line 5 "mfcalc.y" /* yacc.c:339  */
 
 #include <stdlib.h> /* malloc */
 #include <stdio.h> /* For pinrtf, etc. */
@@ -71,10 +71,38 @@
 #include <ctype.h>
 #include "mfcalc.h" /* Contains definition of 'symrec' */
 
+typedef struct YYLTYPE 
+{
+	double first_line;
+	double first_column;
+	double last_line;
+	double last_column;
+} YYLTYPE;
+
+#define YYLTYPE YYLTYPE
+
+# define YYLLOC_DEFAULT(Cur, Rhs, N) \
+do \
+	if (N) \
+	{ \
+		(Cur).first_line = YYRHSLOC(Rhs, 1).first_line; \
+		(Cur).first_column = YYRHSLOC(Rhs, 1).first_column; \
+		(Cur).last_line = YYRHSLOC(Rhs, N).last_line; \
+		(Cur).last_column = YYRHSLOC(Rhs, N).last_column; \
+	} \
+	else \
+	{ \
+		(Cur).first_line	= (Cur).last_line	= \
+		YYRHSLOC(Rhs, 0).last_line; \
+		(Cur).first_column = (Cur).last_column = \
+		YYRHSLOC(Rhs, 0).last_column; \
+	} \
+while (0)
+
 int yylex (void);
 void yyerror (char const *);
 
-#line 78 "mfcalc.tab.c" /* yacc.c:339  */
+#line 106 "mfcalc.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -127,7 +155,7 @@ union YYSTYPE
   symrec* VAR;
   /* FNCT  */
   symrec* FNCT;
-#line 131 "mfcalc.tab.c" /* yacc.c:355  */
+#line 159 "mfcalc.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -158,7 +186,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 162 "mfcalc.tab.c" /* yacc.c:358  */
+#line 190 "mfcalc.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -458,8 +486,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    31,    35,    36,    37,    41,    42,    43,
-      44,    45,    46,    47,    48,    58,    59,    60
+       0,    61,    61,    62,    66,    67,    68,    72,    73,    74,
+      75,    76,    77,    78,    79,    89,    90,    91
 };
 #endif
 
@@ -1343,93 +1371,93 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 36 "mfcalc.y" /* yacc.c:1646  */
+#line 67 "mfcalc.y" /* yacc.c:1646  */
     { printf ("\t%.10g\n", (*(double*)(&yyvsp[-1]))); }
-#line 1349 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1377 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 37 "mfcalc.y" /* yacc.c:1646  */
+#line 68 "mfcalc.y" /* yacc.c:1646  */
     { yyerror; }
-#line 1355 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1383 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 41 "mfcalc.y" /* yacc.c:1646  */
+#line 72 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0]));	}
-#line 1361 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1389 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 42 "mfcalc.y" /* yacc.c:1646  */
+#line 73 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(symrec**)(&yyvsp[0]))->value.var; }
-#line 1367 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1395 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 43 "mfcalc.y" /* yacc.c:1646  */
+#line 74 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0])); (*(symrec**)(&yyvsp[-2]))->value.var = (*(double*)(&yyvsp[0])); }
-#line 1373 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1401 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 44 "mfcalc.y" /* yacc.c:1646  */
+#line 75 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*((*(symrec**)(&yyvsp[-3]))->value.fnctptr))((*(double*)(&yyvsp[-1]))); }
-#line 1379 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1407 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 45 "mfcalc.y" /* yacc.c:1646  */
+#line 76 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) + (*(double*)(&yyvsp[0]));	}
-#line 1385 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1413 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 46 "mfcalc.y" /* yacc.c:1646  */
+#line 77 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) - (*(double*)(&yyvsp[0]));	}
-#line 1391 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1419 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 47 "mfcalc.y" /* yacc.c:1646  */
+#line 78 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) * (*(double*)(&yyvsp[0]));	}
-#line 1397 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1425 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 49 "mfcalc.y" /* yacc.c:1646  */
+#line 80 "mfcalc.y" /* yacc.c:1646  */
     {
 		if((*(double*)(&yyvsp[0]))) {
 			(*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) / (*(double*)(&yyvsp[0]));	
 		}
 		else {
 			(*(double*)(&yyval)) = 1;
-			fprintf(stderr, "%d.%d-%d.%d: division by zero", (yylsp[0]).first_line, (yylsp[0]).first_column, (yylsp[0]).last_line, (yylsp[0]).last_column);
+			fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero", (yylsp[0]).first_line, (yylsp[0]).first_column, (yylsp[0]).last_line, (yylsp[0]).last_column);
 		}
 	}
-#line 1411 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1439 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 58 "mfcalc.y" /* yacc.c:1646  */
+#line 89 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = -(*(double*)(&yyvsp[0]));	}
-#line 1417 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1445 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 59 "mfcalc.y" /* yacc.c:1646  */
+#line 90 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = pow ((*(double*)(&yyvsp[-2])), (*(double*)(&yyvsp[0]))); }
-#line 1423 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1451 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 60 "mfcalc.y" /* yacc.c:1646  */
+#line 91 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-1]));	}
-#line 1429 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1457 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1433 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1461 "mfcalc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1664,7 +1692,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 62 "mfcalc.y" /* yacc.c:1906  */
+#line 93 "mfcalc.y" /* yacc.c:1906  */
 
 
 symrec *
@@ -1791,11 +1819,10 @@ yylex (void)
 		if (s == 0)
 			s = putsym (symbuf, VAR);
 
-		/* convert yylval's memory structure to the structure of struct symrec */
 		yylval.VAR = s; 
 
 		/* return symbol type */
-		return s->type;
+		return VAR;
 	}
 
 	/* update location. */

@@ -1,5 +1,7 @@
 /* Reverse Polish Notation calculator. */
 
+
+
 %{
 #include <stdlib.h> /* malloc */
 #include <stdio.h> /* For pinrtf, etc. */
@@ -8,10 +10,39 @@
 #include <ctype.h>
 #include "mfcalc.h" /* Contains definition of 'symrec' */
 
+typedef struct YYLTYPE 
+{
+	double first_line;
+	double first_column;
+	double last_line;
+	double last_column;
+} YYLTYPE;
+
+#define YYLTYPE YYLTYPE
+
+# define YYLLOC_DEFAULT(Cur, Rhs, N) \
+do \
+	if (N) \
+	{ \
+		(Cur).first_line = YYRHSLOC(Rhs, 1).first_line; \
+		(Cur).first_column = YYRHSLOC(Rhs, 1).first_column; \
+		(Cur).last_line = YYRHSLOC(Rhs, N).last_line; \
+		(Cur).last_column = YYRHSLOC(Rhs, N).last_column; \
+	} \
+	else \
+	{ \
+		(Cur).first_line	= (Cur).last_line	= \
+		YYRHSLOC(Rhs, 0).last_line; \
+		(Cur).first_column = (Cur).last_column = \
+		YYRHSLOC(Rhs, 0).last_column; \
+	} \
+while (0)
+
 int yylex (void);
 void yyerror (char const *);
 %}
 
+%require "3.0.4"
 
 /* Bison declarations.	*/ 
 %define api.value.type union /* Generate YYSTYPE from these types. */ 
@@ -37,22 +68,22 @@ line:
 | error '\n' { yyerror; }
 ;
 
-exp:
+exp[result]:
 NUM	{ $$ = $1;	}
-| VAR { $$ = $1->value.var; }
+| VAR { $result = $VAR->value.var; }
 | VAR '=' exp { $$ = $3; $1->value.var = $3; }
 | FNCT '(' exp ')' { $$ = (*($1->value.fnctptr))($3); }
 | exp '+' exp	{ $$ = $1 + $3;	}
 | exp '-' exp	{ $$ = $1 - $3;	}
 | exp '*' exp	{ $$ = $1 * $3;	}
-| exp '/' exp	
+| exp[left] '/' exp[right]
 	{
 		if($3) {
-			$$ = $1 / $3;	
+			$result = $left / $right;	
 		}
 		else {
-			$$ = 1;
-			fprintf(stderr, "%d.%d-%d.%d: division by zero", @3.first_line, @3.first_column, @3.last_line, @3.last_column);
+			$result = 1;
+			fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero", @3.first_line, @3.first_column, @3.last_line, @3.last_column);
 		}
 	}
 | '-' exp	%prec NEG { $$ = -$2;	}
