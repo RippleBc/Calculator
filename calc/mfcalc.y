@@ -1,7 +1,5 @@
 /* Reverse Polish Notation calculator. */
 
-
-
 %{
 #include <stdlib.h> /* malloc */
 #include <stdio.h> /* For pinrtf, etc. */
@@ -54,11 +52,11 @@ void yyerror (char const *);
 %precedence NEG	/* negation(unary minus) */ 
 %right EXP '^'	/* exponentiation */
 
-%destructor { printf ("discard symbol width type, position %lf.\n", @$.first_line); } <*>
+%destructor { printf ("discard symbol with type, position %lf.\n", @$.first_line); } <*>
 %destructor { printf ("discard symbol without type, position %lf.\n", @$.first_line); } <>
-/**/
-%destructor { free ($$); printf ("discard symbol typed symrec*, position %lf.\n", @$.first_line); } <char*> 
-%destructor { printf ("discard symbol nameed NUM, position %lf.\n", @$.first_line); } NUM
+%destructor { free ($$); printf ("discard symbol typed char*, position %lf.\n", @$.first_line); } <char*> 
+%destructor { free ($$); printf ("discard symbol typed symrec*, position %lf.\n", @$.first_line); } <symrec*> 
+%destructor { printf ("discard symbol named NUM, position %lf.\n", @$.first_line); } NUM
 
 %%
 /* The grammar follows.	*/ 
@@ -70,6 +68,7 @@ input:
 line:
 '\n'
 | exp '\n'	{ printf ("\t%.10g\n", $1); }
+| error '\n' { yyerror; }
 ;
 
 exp[result]:
@@ -82,12 +81,14 @@ NUM	{ $$ = $1;	}
 | exp '*' exp	{ $$ = $1 * $3;	}
 | exp[left] '/' exp[right]
 	{
-		if($3) {
-			$result = $left / $right;	
+		if ($right)
+		{
+			$result = $left / $right;
 		}
-		else {
+		else
+		{
 			$result = 1;
-			fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero", @3.first_line, @3.first_column, @3.last_line, @3.last_column);
+			fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero\n", @3.first_line, @3.first_column, @3.last_line, @3.last_column);
 		}
 	}
 | '-' exp	%prec NEG { $$ = -$2;	}
@@ -119,31 +120,11 @@ getsym (char const *sym_name)
 	return 0;
 }
 
-symrec *
-removesym (char const *sym_name)
-{
-	symrec *pre_ptr = ((void *)0);
-	symrec *ptr = sym_table;
-	while (ptr != (symrec *) 0) {
-		if (strcmp (ptr->name, sym_name) == 0) 
-			break;
-		pre_ptr = ptr;
-		ptr = (symrec *)ptr->next;
-	}
-	
-	if (pre_ptr) 
-	{
-		pre_ptr->next = ptr->next;
-	}
-
-	free(ptr);
-}
-
 /* Called by yyparse on error.	*/ 
 void
 yyerror (char const *s)
 {
-	fprintf (stderr, "%s\n", s);
+	fprintf (stderr, "yyerror: %s\n", s);
 }
 
 int
@@ -238,12 +219,18 @@ yylex (void)
 
 		/* push new symbol */
 		if (s == 0)
+		{
 			s = putsym (symbuf, VAR);
+		}
 
-		yylval.VAR = s; 
-
-		/* return symbol type */
-		return VAR;
+		if(s->type == VAR) {
+			yylval.VAR = s;
+		}
+		else {
+			yylval.FNCT = s;
+		}
+		
+		return s->type;
 	}
 
 	/* update location. */
@@ -280,7 +267,7 @@ struct init const arith_fncts[] =
 
 struct init_constant
 {
-	char const *name; 
+	char const *vname; 
 	double val;
 };
 
@@ -307,9 +294,9 @@ init_table (void)
 		ptr->value.fnctptr = arith_fncts[i].fnct;
 	}
 
-	for (i = 0; constants[i].name != 0; i++)
+	for (i = 0; constants[i].vname != 0; i++)
 	{
-		symrec *ptr = putsym (constants[i].name, VAR);
+		symrec *ptr = putsym (constants[i].vname, VAR);
 		ptr->value.var = constants[i].val;
 	}
 }
