@@ -7,7 +7,6 @@ struct symrec
 	int type;	/* type of symbol: either VAR or FNCT */ 
 	union
 	{
-		int empty; /* if empty */
 		double var;	/* value of a VAR */ 
 		func_t fnctptr;	/* value of a FNCT */
 	} value;

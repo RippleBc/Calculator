@@ -8,21 +8,55 @@
 #include <ctype.h>
 #include "mfcalc.h" /* Contains definition of 'symrec' */
 
+typedef struct YYLTYPE 
+{
+	double first_line;
+	double first_column;
+	double last_line;
+	double last_column;
+} YYLTYPE;
+
+#define YYLTYPE YYLTYPE
+
+# define YYLLOC_DEFAULT(Cur, Rhs, N) \
+do \
+	if (N) \
+	{ \
+		(Cur).first_line = YYRHSLOC(Rhs, 1).first_line; \
+		(Cur).first_column = YYRHSLOC(Rhs, 1).first_column; \
+		(Cur).last_line = YYRHSLOC(Rhs, N).last_line; \
+		(Cur).last_column = YYRHSLOC(Rhs, N).last_column; \
+	} \
+	else \
+	{ \
+		(Cur).first_line	= (Cur).last_line	= YYRHSLOC(Rhs, 0).last_line; \
+		(Cur).first_column = (Cur).last_column = YYRHSLOC(Rhs, 0).last_column; \
+	} \
+while (0)
+
 int yylex (void);
 void yyerror (char const *);
 %}
 
+%require "3.0.4"
 
 /* Bison declarations.	*/ 
 %define api.value.type union /* Generate YYSTYPE from these types. */ 
 %token <double> NUM /* Simple double precision number. */
 %token <symrec*> VAR FNCT /* Symbol table pointer; variable and functioin. */
+%token <char*> STRING /* Simple string. */
 %type <double> exp
-%precedence '='
-%left '-' '+'
-%left '*' '/'
+%precedence EQU '='
+%left MIN '-' PLUS'+'
+%left MUL '*' DIV '/'
 %precedence NEG	/* negation(unary minus) */ 
-%right '^'	/* exponentiation */
+%right EXP '^'	/* exponentiation */
+
+%destructor { printf ("discard symbol with type, position %lf.\n", @$.first_line); } <*>
+%destructor { printf ("discard symbol without type, position %lf.\n", @$.first_line); } <>
+%destructor { free ($$); printf ("discard symbol typed char*, position %lf.\n", @$.first_line); } <char*> 
+%destructor { free ($$); printf ("discard symbol typed symrec*, position %lf.\n", @$.first_line); } <symrec*> 
+%destructor { printf ("discard symbol named NUM, position %lf.\n", @$.first_line); } NUM
 
 %%
 /* The grammar follows.	*/ 
@@ -37,22 +71,24 @@ line:
 | error '\n' { yyerror; }
 ;
 
-exp:
+exp[result]:
 NUM	{ $$ = $1;	}
-| VAR { $$ = $1->value.var; }
+| VAR { $result = $VAR->value.var; }
 | VAR '=' exp { $$ = $3; $1->value.var = $3; }
 | FNCT '(' exp ')' { $$ = (*($1->value.fnctptr))($3); }
 | exp '+' exp	{ $$ = $1 + $3;	}
 | exp '-' exp	{ $$ = $1 - $3;	}
 | exp '*' exp	{ $$ = $1 * $3;	}
-| exp '/' exp	
+| exp[left] '/' exp[right]
 	{
-		if($3) {
-			$$ = $1 / $3;	
+		if ($right)
+		{
+			$result = $left / $right;
 		}
-		else {
-			$$ = 1;
-			fprintf(stderr, "%d.%d-%d.%d: division by zero", @3.first_line, @3.first_column, @3.last_line, @3.last_column);
+		else
+		{
+			$result = 1;
+			fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero\n", @3.first_line, @3.first_column, @3.last_line, @3.last_column);
 		}
 	}
 | '-' exp	%prec NEG { $$ = -$2;	}
@@ -88,7 +124,7 @@ getsym (char const *sym_name)
 void
 yyerror (char const *s)
 {
-	fprintf (stderr, "%s\n", s);
+	fprintf (stderr, "yyerror: %s\n", s);
 }
 
 int
@@ -183,12 +219,18 @@ yylex (void)
 
 		/* push new symbol */
 		if (s == 0)
+		{
 			s = putsym (symbuf, VAR);
+		}
 
-		yylval.VAR = s; 
-
-		/* return symbol type */
-		return VAR;
+		if(s->type == VAR) {
+			yylval.VAR = s;
+		}
+		else {
+			yylval.FNCT = s;
+		}
+		
+		return s->type;
 	}
 
 	/* update location. */
@@ -225,7 +267,7 @@ struct init const arith_fncts[] =
 
 struct init_constant
 {
-	char const *name; 
+	char const *vname; 
 	double val;
 };
 
@@ -252,9 +294,9 @@ init_table (void)
 		ptr->value.fnctptr = arith_fncts[i].fnct;
 	}
 
-	for (i = 0; constants[i].name != 0; i++)
+	for (i = 0; constants[i].vname != 0; i++)
 	{
-		symrec *ptr = putsym (constants[i].name, VAR);
+		symrec *ptr = putsym (constants[i].vname, VAR);
 		ptr->value.var = constants[i].val;
 	}
 }
