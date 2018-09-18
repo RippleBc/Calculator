@@ -121,11 +121,13 @@ void yyerror (char const *);
 
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
 #endif
+
+int yydebug = 1;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -493,8 +495,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    70,    70,    71,    75,    76,    77,    81,    82,    83,
-      84,    85,    86,    87,    88,   100,   101,   102
+       0,    69,    69,    70,    74,    75,    76,    80,    81,    82,
+      83,    84,    85,    86,    87,    99,   100,   101
 };
 #endif
 
@@ -764,141 +766,27 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 62 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol named NUM, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
+#line 64 "mfcalc.y" /* yacc.c:684  */
+      { fprintf (yyoutput, "%g", (*(double*)(&(*yyvaluep)))); }
 #line 770 "mfcalc.tab.c" /* yacc.c:684  */
         break;
 
     case 4: /* VAR  */
-#line 63 "mfcalc.y" /* yacc.c:684  */
-      { free ((*(symrec**)(&(*yyvaluep)))); printf ("discard symbol typed symrec*, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
+#line 62 "mfcalc.y" /* yacc.c:684  */
+      { fprintf (yyoutput, "%s", (*(symrec**)(&(*yyvaluep)))->name); }
 #line 776 "mfcalc.tab.c" /* yacc.c:684  */
         break;
 
     case 5: /* FNCT  */
 #line 63 "mfcalc.y" /* yacc.c:684  */
-      { free ((*(symrec**)(&(*yyvaluep)))); printf ("discard symbol typed symrec*, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
+      { fprintf (yyoutput, "%s()", (*(symrec**)(&(*yyvaluep)))->name); }
 #line 782 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 6: /* STRING  */
-#line 61 "mfcalc.y" /* yacc.c:684  */
-      { free ((*(char**)(&(*yyvaluep)))); printf ("discard symbol typed char*, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 788 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 7: /* EQU  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 794 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 8: /* '='  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 800 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 9: /* MIN  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 806 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 10: /* '-'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 812 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 11: /* PLUS  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 818 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 12: /* '+'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 824 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 13: /* MUL  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 830 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 14: /* '*'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 836 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 15: /* DIV  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 842 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 16: /* '/'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 848 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 17: /* NEG  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 854 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 18: /* EXP  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 860 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 19: /* '^'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 866 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 20: /* '\n'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 872 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 21: /* '('  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 878 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 22: /* ')'  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 884 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 24: /* input  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 890 "mfcalc.tab.c" /* yacc.c:684  */
-        break;
-
-    case 25: /* line  */
-#line 65 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 896 "mfcalc.tab.c" /* yacc.c:684  */
         break;
 
     case 26: /* exp  */
 #line 64 "mfcalc.y" /* yacc.c:684  */
-      { printf ("discard symbol with type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 902 "mfcalc.tab.c" /* yacc.c:684  */
+      { fprintf (yyoutput, "%g", (*(double*)(&(*yyvaluep)))); }
+#line 788 "mfcalc.tab.c" /* yacc.c:684  */
         break;
 
 
@@ -1242,150 +1130,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
   YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  switch (yytype)
-    {
-          case 3: /* NUM  */
-#line 56 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol named NUM, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1251 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 4: /* VAR  */
-#line 57 "mfcalc.y" /* yacc.c:1257  */
-      { free ((*(symrec**)(&(*yyvaluep)))); printf ("discard symbol typed symrec*, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1257 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 5: /* FNCT  */
-#line 57 "mfcalc.y" /* yacc.c:1257  */
-      { free ((*(symrec**)(&(*yyvaluep)))); printf ("discard symbol typed symrec*, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1263 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 6: /* STRING  */
-#line 55 "mfcalc.y" /* yacc.c:1257  */
-      { free ((*(char**)(&(*yyvaluep)))); printf ("discard symbol typed char*, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1269 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 7: /* EQU  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1275 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 8: /* '='  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1281 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 9: /* MIN  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1287 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 10: /* '-'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1293 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 11: /* PLUS  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1299 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 12: /* '+'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1305 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 13: /* MUL  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1311 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 14: /* '*'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1317 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 15: /* DIV  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1323 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 16: /* '/'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1329 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 17: /* NEG  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1335 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 18: /* EXP  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1341 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 19: /* '^'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1347 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 20: /* '\n'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1353 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 21: /* '('  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1359 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 22: /* ')'  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1365 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 24: /* input  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1371 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 25: /* line  */
-#line 59 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol without type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1377 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-    case 26: /* exp  */
-#line 58 "mfcalc.y" /* yacc.c:1257  */
-      { printf ("discard symbol with type, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); }
-#line 1383 "mfcalc.tab.c" /* yacc.c:1257  */
-        break;
-
-
-      default:
-        break;
-    }
+  YYUSE (yytype);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
@@ -1665,61 +1410,61 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 76 "mfcalc.y" /* yacc.c:1646  */
+#line 75 "mfcalc.y" /* yacc.c:1646  */
     { printf ("\t%.10g\n", (*(double*)(&yyvsp[-1]))); }
-#line 1671 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1414 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 77 "mfcalc.y" /* yacc.c:1646  */
+#line 76 "mfcalc.y" /* yacc.c:1646  */
     { yyerror; }
-#line 1677 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1420 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 81 "mfcalc.y" /* yacc.c:1646  */
+#line 80 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0]));	}
-#line 1683 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1426 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 82 "mfcalc.y" /* yacc.c:1646  */
+#line 81 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(symrec**)(&yyvsp[0]))->value.var; }
-#line 1689 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1432 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 83 "mfcalc.y" /* yacc.c:1646  */
+#line 82 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0])); (*(symrec**)(&yyvsp[-2]))->value.var = (*(double*)(&yyvsp[0])); }
-#line 1695 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1438 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 84 "mfcalc.y" /* yacc.c:1646  */
+#line 83 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*((*(symrec**)(&yyvsp[-3]))->value.fnctptr))((*(double*)(&yyvsp[-1]))); }
-#line 1701 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1444 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 85 "mfcalc.y" /* yacc.c:1646  */
+#line 84 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) + (*(double*)(&yyvsp[0]));	}
-#line 1707 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1450 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 86 "mfcalc.y" /* yacc.c:1646  */
+#line 85 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) - (*(double*)(&yyvsp[0]));	}
-#line 1713 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1456 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 87 "mfcalc.y" /* yacc.c:1646  */
+#line 86 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) * (*(double*)(&yyvsp[0]));	}
-#line 1719 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1462 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 89 "mfcalc.y" /* yacc.c:1646  */
+#line 88 "mfcalc.y" /* yacc.c:1646  */
     {
 		if ((*(double*)(&yyvsp[0])))
 		{
@@ -1731,29 +1476,29 @@ yyreduce:
 			fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero\n", (yylsp[0]).first_line, (yylsp[0]).first_column, (yylsp[0]).last_line, (yylsp[0]).last_column);
 		}
 	}
-#line 1735 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1478 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 100 "mfcalc.y" /* yacc.c:1646  */
+#line 99 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = -(*(double*)(&yyvsp[0]));	}
-#line 1741 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1484 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 101 "mfcalc.y" /* yacc.c:1646  */
+#line 100 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = pow ((*(double*)(&yyvsp[-2])), (*(double*)(&yyvsp[0]))); }
-#line 1747 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1490 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 102 "mfcalc.y" /* yacc.c:1646  */
+#line 101 "mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-1]));	}
-#line 1753 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1496 "mfcalc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1757 "mfcalc.tab.c" /* yacc.c:1646  */
+#line 1500 "mfcalc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1988,7 +1733,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 104 "mfcalc.y" /* yacc.c:1906  */
+#line 103 "mfcalc.y" /* yacc.c:1906  */
 
 
 symrec *

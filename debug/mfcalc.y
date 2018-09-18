@@ -52,17 +52,14 @@ void yyerror (char const *);
 %precedence NEG	/* negation(unary minus) */ 
 %right EXP '^'	/* exponentiation */
 
-%destructor { free ($$); printf ("discard symbol typed char*, position %lf %lf.\n", @$.first_line, @$.first_column); } <char*> 
-%destructor { printf ("discard symbol named NUM, position %lf %lf.\n", @$.first_line, @$.first_column); } NUM
-%destructor { free ($$); printf ("discard symbol typed symrec*, position %lf %lf.\n", @$.first_line, @$.first_column); } <symrec*> 
-%destructor { printf ("discard symbol with type, position %lf %lf.\n", @$.first_line, @$.first_column); } <*>
-%destructor { printf ("discard symbol without type, position %lf %lf.\n", @$.first_line, @$.first_column); } <>
-
-%printer { free ($$); printf ("discard symbol typed char*, position %lf %lf.\n", @$.first_line, @$.first_column); } <char*> 
-%printer { printf ("discard symbol named NUM, position %lf %lf.\n", @$.first_line, @$.first_column); } NUM
-%printer { free ($$); printf ("discard symbol typed symrec*, position %lf %lf.\n", @$.first_line, @$.first_column); } <symrec*> 
-%printer { printf ("discard symbol with type, position %lf %lf.\n", @$.first_line, @$.first_column); } <*>
-%printer { printf ("discard symbol without type, position %lf %lf.\n", @$.first_line, @$.first_column); } <>
+/* Generate the parser description file. */
+%verbose
+/* Enable run-time traces (yydebug). */
+%define parse.trace
+/* Formatting semantic values. */
+%printer { fprintf (yyoutput, "%s", $$->name); } VAR;
+%printer { fprintf (yyoutput, "%s()", $$->name); } FNCT;
+%printer { fprintf (yyoutput, "%g", $$); } <double>;
 
 %%
 /* The grammar follows.	*/ 

@@ -1,0 +1,188 @@
+Nonterminals useless in grammar
+
+   useless
+
+
+Terminals unused in grammar
+
+   STR
+
+
+语法中的规则无效
+
+    6 useless: STR
+
+
+状态 8 conflicts: 1 shift/reduce
+状态 9 conflicts: 1 shift/reduce
+状态 10 conflicts: 1 shift/reduce
+状态 11 conflicts: 4 shift/reduce
+
+
+语法
+
+    0 $accept: exp $end
+
+    1 exp: exp '+' exp
+    2    | exp '-' exp
+    3    | exp '*' exp
+    4    | exp '/' exp
+    5    | NUM
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'*' (42) 3
+'+' (43) 1
+'-' (45) 2
+'/' (47) 4
+error (256)
+NUM (258) 5
+STR (259)
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    左： 0
+exp (10)
+    左： 1 2 3 4 5, 右： 0 1 2 3 4
+
+
+State 0
+
+    0 $accept: . exp $end
+
+    NUM  shift, and go to state 1
+
+    exp  转到状态 2
+
+
+State 1
+
+    5 exp: NUM .
+
+    $default  reduce using rule 5 (exp)
+
+
+State 2
+
+    0 $accept: exp . $end
+    1 exp: exp . '+' exp
+    2    | exp . '-' exp
+    3    | exp . '*' exp
+    4    | exp . '/' exp
+
+    $end  shift, and go to state 3
+    '+'   shift, and go to state 4
+    '-'   shift, and go to state 5
+    '*'   shift, and go to state 6
+    '/'   shift, and go to state 7
+
+
+State 3
+
+    0 $accept: exp $end .
+
+    $default  接受
+
+
+State 4
+
+    1 exp: exp '+' . exp
+
+    NUM  shift, and go to state 1
+
+    exp  转到状态 8
+
+
+State 5
+
+    2 exp: exp '-' . exp
+
+    NUM  shift, and go to state 1
+
+    exp  转到状态 9
+
+
+State 6
+
+    3 exp: exp '*' . exp
+
+    NUM  shift, and go to state 1
+
+    exp  转到状态 10
+
+
+State 7
+
+    4 exp: exp '/' . exp
+
+    NUM  shift, and go to state 1
+
+    exp  转到状态 11
+
+
+State 8
+
+    1 exp: exp . '+' exp
+    1    | exp '+' exp .
+    2    | exp . '-' exp
+    3    | exp . '*' exp
+    4    | exp . '/' exp
+
+    '*'  shift, and go to state 6
+    '/'  shift, and go to state 7
+
+    '/'       [reduce using rule 1 (exp)]
+    $default  reduce using rule 1 (exp)
+
+
+State 9
+
+    1 exp: exp . '+' exp
+    2    | exp . '-' exp
+    2    | exp '-' exp .
+    3    | exp . '*' exp
+    4    | exp . '/' exp
+
+    '*'  shift, and go to state 6
+    '/'  shift, and go to state 7
+
+    '/'       [reduce using rule 2 (exp)]
+    $default  reduce using rule 2 (exp)
+
+
+State 10
+
+    1 exp: exp . '+' exp
+    2    | exp . '-' exp
+    3    | exp . '*' exp
+    3    | exp '*' exp .
+    4    | exp . '/' exp
+
+    '/'  shift, and go to state 7
+
+    '/'       [reduce using rule 3 (exp)]
+    $default  reduce using rule 3 (exp)
+
+
+State 11
+
+    1 exp: exp . '+' exp
+    2    | exp . '-' exp
+    3    | exp . '*' exp
+    4    | exp . '/' exp
+    4    | exp '/' exp .
+
+    '+'  shift, and go to state 4
+    '-'  shift, and go to state 5
+    '*'  shift, and go to state 6
+    '/'  shift, and go to state 7
+
+    '+'       [reduce using rule 4 (exp)]
+    '-'       [reduce using rule 4 (exp)]
+    '*'       [reduce using rule 4 (exp)]
+    '/'       [reduce using rule 4 (exp)]
+    $default  reduce using rule 4 (exp)
