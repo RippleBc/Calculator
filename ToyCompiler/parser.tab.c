@@ -65,8 +65,8 @@
 #line 1 "parser.y" /* yacc.c:339  */
 
 	#include "node.h"
-        #include <cstdio>
-        #include <cstdlib>
+  #include <cstdio>
+  #include <cstdlib>
 	NBlock *programBlock; /* the top level root node of our final AST */
 
 	extern int yylex();
@@ -521,11 +521,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    48,    49,    52,    52,    52,    53,    54,
-      57,    58,    61,    62,    65,    69,    73,    74,    75,    78,
-      81,    82,    85,    86,    87,    88,    89,    90,    91,    92,
-      93,    94,    97,    98,    99,   102,   102,   102,   102,   102,
-     102
+       0,    48,    48,    51,    52,    55,    55,    55,    56,    57,
+      60,    61,    64,    65,    68,    72,    76,    77,    78,    81,
+      84,    85,    88,    89,    90,    91,    92,    93,    94,    95,
+      96,    97,   100,   101,   102,   105,   105,   105,   105,   105,
+     105
 };
 #endif
 
@@ -1347,175 +1347,175 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 45 "parser.y" /* yacc.c:1646  */
+#line 48 "parser.y" /* yacc.c:1646  */
     { programBlock = (*(NBlock**)(&yyvsp[0])); }
 #line 1353 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 48 "parser.y" /* yacc.c:1646  */
+#line 51 "parser.y" /* yacc.c:1646  */
     { (*(NBlock**)(&yyval)) = new NBlock(); (*(NBlock**)(&yyval))->statements.push_back((*(stmt*)(&yyvsp[0]))); }
 #line 1359 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 49 "parser.y" /* yacc.c:1646  */
+#line 52 "parser.y" /* yacc.c:1646  */
     { (*(NBlock**)(&yyvsp[-1]))->statements.push_back((*(stmt*)(&yyvsp[0]))); }
 #line 1365 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 53 "parser.y" /* yacc.c:1646  */
+#line 56 "parser.y" /* yacc.c:1646  */
     { (*(NStatement**)(&yyval)) = new NExpressionStatement(*(*(NExpression**)(&yyvsp[0]))); }
 #line 1371 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 54 "parser.y" /* yacc.c:1646  */
+#line 57 "parser.y" /* yacc.c:1646  */
     { (*(NStatement**)(&yyval)) = new NReturnStatement(*(*(NExpression**)(&yyvsp[0]))); }
 #line 1377 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 57 "parser.y" /* yacc.c:1646  */
+#line 60 "parser.y" /* yacc.c:1646  */
     { (*(NBlock**)(&yyval)) = (*(NBlock**)(&yyvsp[-1])); }
 #line 1383 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 58 "parser.y" /* yacc.c:1646  */
+#line 61 "parser.y" /* yacc.c:1646  */
     { (*(NBlock**)(&yyval)) = new NBlock(); }
 #line 1389 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 61 "parser.y" /* yacc.c:1646  */
+#line 64 "parser.y" /* yacc.c:1646  */
     { (*(NStatement**)(&yyval)) = new NVariableDeclaration(*(*(NIdentifier**)(&yyvsp[-1])), *(*(NIdentifier**)(&yyvsp[0]))); }
 #line 1395 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 62 "parser.y" /* yacc.c:1646  */
+#line 65 "parser.y" /* yacc.c:1646  */
     { (*(NStatement**)(&yyval)) = new NVariableDeclaration(*(*(NIdentifier**)(&yyvsp[-3])), *(*(NIdentifier**)(&yyvsp[-2])), (*(NExpression**)(&yyvsp[0]))); }
 #line 1401 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 66 "parser.y" /* yacc.c:1646  */
+#line 69 "parser.y" /* yacc.c:1646  */
     { (*(NStatement**)(&yyval)) = new NExternDeclaration(*(*(NIdentifier**)(&yyvsp[-4])), *(*(NIdentifier**)(&yyvsp[-3])), *(*(std::vector<NVariableDeclaration*> *)(&yyvsp[-1]))); delete (*(std::vector<NVariableDeclaration*> *)(&yyvsp[-1])); }
 #line 1407 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 70 "parser.y" /* yacc.c:1646  */
+#line 73 "parser.y" /* yacc.c:1646  */
     { (*(NStatement**)(&yyval)) = new NFunctionDeclaration(*(*(NIdentifier**)(&yyvsp[-5])), *(*(NIdentifier**)(&yyvsp[-4])), *(*(std::vector<NVariableDeclaration*> *)(&yyvsp[-2])), *(*(NBlock**)(&yyvsp[0]))); delete (*(std::vector<NVariableDeclaration*> *)(&yyvsp[-2])); }
 #line 1413 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 73 "parser.y" /* yacc.c:1646  */
+#line 76 "parser.y" /* yacc.c:1646  */
     { (*(std::vector<NVariableDeclaration*> *)(&yyval)) = new VariableList(); }
 #line 1419 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 74 "parser.y" /* yacc.c:1646  */
+#line 77 "parser.y" /* yacc.c:1646  */
     { (*(std::vector<NVariableDeclaration*> *)(&yyval)) = new VariableList(); (*(std::vector<NVariableDeclaration*> *)(&yyval))->push_back((*(var_decl*)(&yyvsp[0]))); }
 #line 1425 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 75 "parser.y" /* yacc.c:1646  */
+#line 78 "parser.y" /* yacc.c:1646  */
     { (*(std::vector<NVariableDeclaration*> *)(&yyvsp[-2]))->push_back((*(var_decl*)(&yyvsp[0]))); }
 #line 1431 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 78 "parser.y" /* yacc.c:1646  */
+#line 81 "parser.y" /* yacc.c:1646  */
     { (*(NIdentifier**)(&yyval)) = new NIdentifier(*(*(std::string **)(&yyvsp[0]))); delete (*(std::string **)(&yyvsp[0])); }
 #line 1437 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 81 "parser.y" /* yacc.c:1646  */
+#line 84 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NInteger(atol((*(std::string **)(&yyvsp[0]))->c_str())); delete (*(std::string **)(&yyvsp[0])); }
 #line 1443 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 82 "parser.y" /* yacc.c:1646  */
+#line 85 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NDouble(atof((*(std::string **)(&yyvsp[0]))->c_str())); delete (*(std::string **)(&yyvsp[0])); }
 #line 1449 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 85 "parser.y" /* yacc.c:1646  */
+#line 88 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NAssignment(*(*(ident*)(&yyvsp[-2])), *(*(NExpression**)(&yyvsp[0]))); }
 #line 1455 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 86 "parser.y" /* yacc.c:1646  */
+#line 89 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NMethodCall(*(*(NIdentifier**)(&yyvsp[-3])), *(*(std::vector<NExpression*>**)(&yyvsp[-1]))); delete (*(std::vector<NExpression*>**)(&yyvsp[-1])); }
 #line 1461 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 87 "parser.y" /* yacc.c:1646  */
+#line 90 "parser.y" /* yacc.c:1646  */
     { (*(ident*)(&yyval)) = (*(NIdentifier**)(&yyvsp[0])); }
 #line 1467 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 89 "parser.y" /* yacc.c:1646  */
+#line 92 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NBinaryOperator(*(*(NExpression**)(&yyvsp[-2])), (*(int*)(&yyvsp[-1])), *(*(NExpression**)(&yyvsp[0]))); }
 #line 1473 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 90 "parser.y" /* yacc.c:1646  */
+#line 93 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NBinaryOperator(*(*(NExpression**)(&yyvsp[-2])), (*(int*)(&yyvsp[-1])), *(*(NExpression**)(&yyvsp[0]))); }
 #line 1479 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 91 "parser.y" /* yacc.c:1646  */
+#line 94 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NBinaryOperator(*(*(NExpression**)(&yyvsp[-2])), (*(int*)(&yyvsp[-1])), *(*(NExpression**)(&yyvsp[0]))); }
 #line 1485 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 92 "parser.y" /* yacc.c:1646  */
+#line 95 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NBinaryOperator(*(*(NExpression**)(&yyvsp[-2])), (*(int*)(&yyvsp[-1])), *(*(NExpression**)(&yyvsp[0]))); }
 #line 1491 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 93 "parser.y" /* yacc.c:1646  */
+#line 96 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = new NBinaryOperator(*(*(NExpression**)(&yyvsp[-2])), (*(int*)(&yyvsp[-1])), *(*(NExpression**)(&yyvsp[0]))); }
 #line 1497 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 94 "parser.y" /* yacc.c:1646  */
+#line 97 "parser.y" /* yacc.c:1646  */
     { (*(NExpression**)(&yyval)) = (*(NExpression**)(&yyvsp[-1])); }
 #line 1503 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 97 "parser.y" /* yacc.c:1646  */
+#line 100 "parser.y" /* yacc.c:1646  */
     { (*(std::vector<NExpression*>**)(&yyval)) = new ExpressionList(); }
 #line 1509 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 98 "parser.y" /* yacc.c:1646  */
+#line 101 "parser.y" /* yacc.c:1646  */
     { (*(std::vector<NExpression*>**)(&yyval)) = new ExpressionList(); (*(std::vector<NExpression*>**)(&yyval))->push_back((*(NExpression**)(&yyvsp[0]))); }
 #line 1515 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 99 "parser.y" /* yacc.c:1646  */
+#line 102 "parser.y" /* yacc.c:1646  */
     { (*(std::vector<NExpression*>**)(&yyvsp[-2]))->push_back((*(NExpression**)(&yyvsp[0]))); }
 #line 1521 "parser.tab.c" /* yacc.c:1646  */
     break;
@@ -1749,5 +1749,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 104 "parser.y" /* yacc.c:1906  */
+#line 107 "parser.y" /* yacc.c:1906  */
 

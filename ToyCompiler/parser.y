@@ -1,12 +1,15 @@
 %{
 	#include "node.h"
-        #include <cstdio>
-        #include <cstdlib>
+  #include <cstdio>
+  #include <cstdlib>
 	NBlock *programBlock; /* the top level root node of our final AST */
 
 	extern int yylex();
 	void yyerror(const char *s) { std::printf("Error: %s\n", s);std::exit(1); }
 %}
+
+/* Generate the parser description file. */
+%verbose
 
 /* Generate YYSTYPE from these types. */ 
 %define api.value.type union 
