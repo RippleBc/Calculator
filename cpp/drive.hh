@@ -4,7 +4,7 @@
 # include <map>
 # include "parser.hh"
 
-// Tell Flex the lexer’s prototype ...
+// Tell Flex the lexer’s prototype.
 # define YY_DECL yy::parser::symbol_type yylex (driver& drv)
 // declare it for the parser’s sake.
 YY_DECL;
@@ -22,7 +22,7 @@ public:
 	bool trace_scanning;
 	// The token’s location used by the scanner.
 	yy::location location;
-	// 
+	// Used to record variable.
 	std::map<std::string, int> variables;
 	//
 	int result;

@@ -1,5 +1,7 @@
 %skeleton "lalr1.cc" /* -*- C++ -*- */
 %require "3.1"
+/* write an extra output fle containing macro defnitions for 
+the token type names defined in the grammar, as well as a few other declarations */
 %defines
 %define api.token.constructor
 %define api.value.type variant
@@ -10,13 +12,15 @@
 	class driver;
 }
 
-// The parsing context.
+/* Specify that argument-declaration are additional yylex/yyparse argument declaration. */
 %param { driver& drv }
+/* request location tracking */
 %locations
-
+/* enable parser tracing */
 %define parse.trace
+/* enable verbose error messages */
 %define parse.error verbose
-
+/* the code between %code { and } is output in the *.cc fle */
 %code {
 # include "driver.hh"
 }
