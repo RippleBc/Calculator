@@ -12,6 +12,7 @@ int
 driver::parse (const std::string &f)
 {
 	file = f;
+	/* initialize location */
 	location.initialize (&file);
 	scan_begin ();
 	yy::parser parser (*this);
