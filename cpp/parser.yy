@@ -14,14 +14,14 @@
 %define parse.assert
 
 %code requires {
-	# include <string>
+	#include <string>
 	class driver;
 }
 
 /* Specify that argument-declaration are additional yylex argument declaration. */
 %lex-param { driver& drv }
 /* Specify that argument-declaration are additional yyparse argument declaration. */
-%parse-param { parse-param }
+%parse-param { driver& drv }
 /* Generate the code processing the locations.
  @$, Acts like a structure variable containing information on the textual location of the grouping made by the current rule.
  @n, Acts like a structure variable containing information on the textual location of the nth component of the current rule. */
@@ -32,7 +32,7 @@
 %define parse.error verbose
 /* the code between %code { and } is output in the *.cc file */
 %code {
-# include "driver.hh"
+#include "driver.hh"
 }
 
 /* Add a prefx to the token names when generating their defnition in the target language.

@@ -7,9 +7,8 @@
 /* If you specifed both %define api.value.type variant and %define api.token.constructor,
 the parser class also defines the class parser::symbol_type which defnes a complete symbol, 
 aggregating its type (i.e., the traditional value returned by yylex), 
-its semantic value (i.e., the value passed in yylval), and possibly its location (yylloc) */
+its semantic value (i.e., the value passed in yylval), and possibly its location (yylloc) */     
 # define YY_DECL yy::parser::symbol_type yylex (driver& drv)
-
 // declare it for the parser’s sake.
 YY_DECL;
 

@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.cc"
+#line 3 "lex.gm.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -28,7 +28,7 @@
      * We will address this in a future release of flex, or omit the C++ scanner
      * altogether.
      */
-    #define yyFlexLexer yyFlexLexer
+    #define yyFlexLexer gmFlexLexer
 /* %endif */
 
 /* %if-c-only */
@@ -351,9 +351,9 @@ struct yy_buffer_state
 /* %endif */
 /* %endif */
 
-void *yyalloc (yy_size_t  );
-void *yyrealloc (void *,yy_size_t  );
-void yyfree (void *  );
+void *gmalloc (yy_size_t  );
+void *gmrealloc (void *,yy_size_t  );
+void gmfree (void *  );
 
 #define yy_new_buffer yy_create_buffer
 
@@ -497,8 +497,8 @@ static yyconst flex_int16_t yy_chk[39] =
 
 static yyconst flex_int16_t yy_rule_linenum[13] =
     {   0,
-       40,   42,   44,   45,   46,   47,   48,   49,   50,   52,
-       60,   62
+       41,   43,   45,   46,   47,   48,   49,   50,   51,   53,
+       61,   63
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -528,10 +528,10 @@ static yyconst flex_int16_t yy_rule_linenum[13] =
 # pragma GCC diagnostic ignored "-Wnull-dereference"
 #endif
 #define YY_NO_INPUT 1
-#line 29 "lex.ll"
+#line 30 "lex.ll"
 	// Code run each time a pattern is matched.
 	# define YY_USER_ACTION loc.columns (yyleng);
-#line 535 "lex.yy.cc"
+#line 535 "lex.gm.cc"
 
 #define INITIAL 0
 
@@ -728,7 +728,7 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 33 "lex.ll"
+#line 34 "lex.ll"
 
 
 	// A handy shortcut to the location held by the driver.
@@ -736,7 +736,7 @@ YY_DECL
 	// Code run each time yylex is called.
 	loc.step ();
 
-#line 740 "lex.yy.cc"
+#line 740 "lex.gm.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -813,53 +813,53 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 40 "lex.ll"
+#line 41 "lex.ll"
 loc.step ();
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 42 "lex.ll"
+#line 43 "lex.ll"
 loc.lines (yyleng); loc.step ();
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 44 "lex.ll"
+#line 45 "lex.ll"
 return yy::parser::make_MINUS (loc);
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 45 "lex.ll"
+#line 46 "lex.ll"
 return yy::parser::make_PLUS (loc);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 46 "lex.ll"
+#line 47 "lex.ll"
 return yy::parser::make_STAR (loc);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 47 "lex.ll"
+#line 48 "lex.ll"
 return yy::parser::make_SLASH (loc);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 48 "lex.ll"
+#line 49 "lex.ll"
 return yy::parser::make_LPAREN (loc);
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 49 "lex.ll"
+#line 50 "lex.ll"
 return yy::parser::make_RPAREN (loc);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 50 "lex.ll"
+#line 51 "lex.ll"
 return yy::parser::make_ASSIGN (loc);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 52 "lex.ll"
+#line 53 "lex.ll"
 {
 	errno = 0;
 	long n = strtol (yytext, NULL, 10);
@@ -870,26 +870,26 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 60 "lex.ll"
+#line 61 "lex.ll"
 return yy::parser::make_IDENTIFIER (yytext, loc);
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 62 "lex.ll"
+#line 63 "lex.ll"
 {
 	throw yy::parser::syntax_error (loc, "invalid character: " + std::string(yytext));
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 66 "lex.ll"
+#line 67 "lex.ll"
 return yy::parser::make_END (loc);
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 67 "lex.ll"
+#line 68 "lex.ll"
 ECHO;
 	YY_BREAK
-#line 893 "lex.yy.cc"
+#line 893 "lex.gm.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1084,9 +1084,9 @@ void yyFlexLexer::ctor_common()
 yyFlexLexer::~yyFlexLexer()
 {
 	delete [] yy_state_buf;
-	yyfree(yy_start_stack  );
+	gmfree(yy_start_stack  );
 	yy_delete_buffer( YY_CURRENT_BUFFER );
-	yyfree(yy_buffer_stack  );
+	gmfree(yy_buffer_stack  );
 }
 
 /* The contents of this function are C++ specific, so the () macro is not used.
@@ -1234,7 +1234,7 @@ int yyFlexLexer::yy_get_next_buffer()
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
-					yyrealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
+					gmrealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
 				}
 			else
 				/* Can't grow it, we don't own it. */
@@ -1283,7 +1283,7 @@ int yyFlexLexer::yy_get_next_buffer()
 	if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
 		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) gmrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
 	}
@@ -1592,7 +1592,7 @@ void yyFlexLexer::yyrestart( std::istream* input_file )
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) yyalloc(sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) gmalloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -1601,7 +1601,7 @@ void yyFlexLexer::yyrestart( std::istream* input_file )
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) yyalloc(b->yy_buf_size + 2  );
+	b->yy_ch_buf = (char *) gmalloc(b->yy_buf_size + 2  );
 	if ( ! b->yy_ch_buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -1643,9 +1643,9 @@ void yyFlexLexer::yyrestart( std::istream* input_file )
 		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
 	if ( b->yy_is_our_buffer )
-		yyfree((void *) b->yy_ch_buf  );
+		gmfree((void *) b->yy_ch_buf  );
 
-	yyfree((void *) b  );
+	gmfree((void *) b  );
 }
 
 /* Initializes or reinitializes a buffer.
@@ -1801,7 +1801,7 @@ void yyFlexLexer::yyensure_buffer_stack(void)
 		 * immediate realloc on the next call.
          */
 		num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
-		(yy_buffer_stack) = (struct yy_buffer_state**)yyalloc
+		(yy_buffer_stack) = (struct yy_buffer_state**)gmalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
 		if ( ! (yy_buffer_stack) )
@@ -1820,7 +1820,7 @@ void yyFlexLexer::yyensure_buffer_stack(void)
 		yy_size_t grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = (yy_buffer_stack_max) + grow_size;
-		(yy_buffer_stack) = (struct yy_buffer_state**)yyrealloc
+		(yy_buffer_stack) = (struct yy_buffer_state**)gmrealloc
 								((yy_buffer_stack),
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
@@ -1857,10 +1857,10 @@ void yyFlexLexer::yyensure_buffer_stack(void)
 		new_size = (yy_start_stack_depth) * sizeof( int );
 
 		if ( ! (yy_start_stack) )
-			(yy_start_stack) = (int *) yyalloc(new_size  );
+			(yy_start_stack) = (int *) gmalloc(new_size  );
 
 		else
-			(yy_start_stack) = (int *) yyrealloc((void *) (yy_start_stack),new_size  );
+			(yy_start_stack) = (int *) gmrealloc((void *) (yy_start_stack),new_size  );
 
 		if ( ! (yy_start_stack) )
 			YY_FATAL_ERROR( "out of memory expanding start-condition stack" );
@@ -1970,12 +1970,12 @@ static int yy_flex_strlen (yyconst char * s )
 }
 #endif
 
-void *yyalloc (yy_size_t  size )
+void *gmalloc (yy_size_t  size )
 {
 			return (void *) malloc( size );
 }
 
-void *yyrealloc  (void * ptr, yy_size_t  size )
+void *gmrealloc  (void * ptr, yy_size_t  size )
 {
 		
 	/* The cast to (char *) in the following accommodates both
@@ -1988,9 +1988,9 @@ void *yyrealloc  (void * ptr, yy_size_t  size )
 	return (void *) realloc( (char *) ptr, size );
 }
 
-void yyfree (void * ptr )
+void gmfree (void * ptr )
 {
-			free( (char *) ptr );	/* see yyrealloc() for (char *) cast */
+			free( (char *) ptr );	/* see gmrealloc() for (char *) cast */
 }
 
 /* %if-tables-serialization definitions */
@@ -2000,7 +2000,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 67 "lex.ll"
+#line 68 "lex.ll"
 
 
 

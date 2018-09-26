@@ -1,24 +1,27 @@
 %{ /* -*- C++ -*- */
-# include <cerrno>
-# include <climits>
-# include <cstdlib>
-# include <string>
-# include "driver.hh"
-# include "parser.hh"
+#include <cerrno>
+#include <climits>
+#include <cstdlib>
+#include <string>
+#include <iostream>     // std::ios, std::istream, std::cout
+#include <fstream>      // std::filebuf
+#include "driver.hh"
+#include "parser.hh"
 // Work around an incompatibility in flex (at least versions
 // 2.5.31 through 2.5.33): it generates code that does
 // not conform to C89. See Debian bug 333231
 // <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=333231>.
-# undef yywrap
-# define yywrap() 1
+#undef yywrap
+#define yywrap() 1
 // Pacify warnings in yy_init_buffer (observed with Flex 2.6.4)
 // and GCC 7.3.0.
 #if defined __GNUC__ && 7 <= __GNUC__
-# pragma GCC diagnostic ignored "-Wnull-dereference"
+#pragma GCC diagnostic ignored "-Wnull-dereference"
 #endif
 %}
 
 %option noyywrap nounput batch debug noinput
+%option c++
 
 id [a-zA-Z][a-zA-Z_0-9]*
 int [0-9]+
@@ -26,7 +29,7 @@ blank [ \t]
 
 %{
 	// Code run each time a pattern is matched.
-	# define YY_USER_ACTION loc.columns (yyleng);
+	#define YY_USER_ACTION loc.columns (yyleng);
 %}
 
 %%
@@ -68,17 +71,28 @@ blank [ \t]
 void
 driver::scan_begin ()
 {
-yy_flex_debug = trace_scanning;
-if (file.empty () || file == "-")
-yyin = stdin;
-else if (!(yyin = fopen (file.c_str (), "r")))
-{
-std::cerr << "cannot open " << file << ": " << strerror(errno) << ’\n’;
-exit (EXIT_FAILURE);
+	std::istream *is = nullptr;
+
+	std::filebuf fb;
+	if (file.empty () || file == "-") {
+		is = new std::istream(&stdin);
+	}
+  if (!fb.open ("test.txt", std::ios::in))
+  {
+  	std::cerr << "cannot open " << file << ": " << strerror(errno) << ’\n’;
+		exit (EXIT_FAILURE);
+  } else {
+  	is = new std::istream(&fb);
+  }
+
+	 = new yyFlexLexer(is);
+  lexer -> set_debug(trace_scanning)
+
+	return 0;
 }
-}
+
 void
 driver::scan_end ()
 {
-fclose (yyin);
+	fclose (yyin);
 }

@@ -42,7 +42,7 @@
 // //                    "%code requires" blocks.
 #line 16 "parser.yy" // lalr1.cc:377
 
-	# include <string>
+	#include <string>
 	class driver;
 
 #line 49 "parser.tab.hh" // lalr1.cc:377
@@ -290,6 +290,7 @@ namespace yy {
     union union_type
     {
       // "number"
+      // unit
       // exp
       char dummy1[sizeof(int)];
 
@@ -477,7 +478,7 @@ namespace yy {
 
 
     /// Build a parser object.
-    parser (parse-param_yyarg);
+    parser (driver& drv_yyarg);
     virtual ~parser ();
 
     /// Parse.
@@ -690,7 +691,7 @@ namespace yy {
 
 
     // User arguments.
-    parse-param;
+    driver& drv;
   };
 
   // Symbol number corresponding to token number t.
@@ -764,6 +765,7 @@ namespace yy {
       switch (other.type_get ())
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         value.copy< int > (other.value);
         break;
@@ -790,6 +792,7 @@ namespace yy {
       switch (this->type_get ())
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         value.copy< int > (v);
         break;
@@ -854,6 +857,7 @@ namespace yy {
     switch (yytype)
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         value.template destroy< int > ();
         break;
@@ -886,6 +890,7 @@ namespace yy {
       switch (this->type_get ())
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         value.move< int > (s.value);
         break;
@@ -1018,7 +1023,7 @@ namespace yy {
 
 
 } // yy
-#line 1022 "parser.tab.hh" // lalr1.cc:377
+#line 1027 "parser.tab.hh" // lalr1.cc:377
 
 
 

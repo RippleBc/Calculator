@@ -51,7 +51,7 @@
 // Unqualified %code blocks.
 #line 34 "parser.yy" // lalr1.cc:413
 
-# include "driver.hh"
+#include "driver.hh"
 
 #line 57 "parser.tab.cc" // lalr1.cc:413
 
@@ -180,13 +180,13 @@ namespace yy {
 
 
   /// Build a parser object.
-  parser::parser (parse-param_yyarg)
+  parser::parser (driver& drv_yyarg)
     :
 #if YYDEBUG
       yydebug_ (false),
       yycdebug_ (&std::cerr),
 #endif
-      param (param_yyarg)
+      drv (drv_yyarg)
   {}
 
   parser::~parser ()
@@ -252,6 +252,7 @@ namespace yy {
       switch (that.type_get ())
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         value.move< int > (that.value);
         break;
@@ -276,6 +277,7 @@ namespace yy {
       switch (that.type_get ())
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         value.copy< int > (that.value);
         break;
@@ -322,23 +324,30 @@ namespace yy {
     {
             case 10: // "identifier"
 
-#line 62 "parser.yy" // lalr1.cc:636
+#line 63 "parser.yy" // lalr1.cc:636
         { yyoutput << yysym.value.template as< std::string > (); }
-#line 328 "parser.tab.cc" // lalr1.cc:636
+#line 330 "parser.tab.cc" // lalr1.cc:636
         break;
 
       case 11: // "number"
 
-#line 62 "parser.yy" // lalr1.cc:636
+#line 63 "parser.yy" // lalr1.cc:636
         { yyoutput << yysym.value.template as< int > (); }
-#line 335 "parser.tab.cc" // lalr1.cc:636
+#line 337 "parser.tab.cc" // lalr1.cc:636
+        break;
+
+      case 13: // unit
+
+#line 63 "parser.yy" // lalr1.cc:636
+        { yyoutput << yysym.value.template as< int > (); }
+#line 344 "parser.tab.cc" // lalr1.cc:636
         break;
 
       case 16: // exp
 
-#line 62 "parser.yy" // lalr1.cc:636
+#line 63 "parser.yy" // lalr1.cc:636
         { yyoutput << yysym.value.template as< int > (); }
-#line 342 "parser.tab.cc" // lalr1.cc:636
+#line 351 "parser.tab.cc" // lalr1.cc:636
         break;
 
 
@@ -539,6 +548,7 @@ namespace yy {
         switch (yyr1_[yyn])
     {
       case 11: // "number"
+      case 13: // unit
       case 16: // exp
         yylhs.value.build< int > ();
         break;
@@ -565,73 +575,73 @@ namespace yy {
           switch (yyn)
             {
   case 2:
-#line 69 "parser.yy" // lalr1.cc:859
+#line 70 "parser.yy" // lalr1.cc:859
     { drv.result = yystack_[0].value.as< int > (); }
-#line 571 "parser.tab.cc" // lalr1.cc:859
+#line 581 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 3:
-#line 72 "parser.yy" // lalr1.cc:859
+#line 73 "parser.yy" // lalr1.cc:859
     {}
-#line 577 "parser.tab.cc" // lalr1.cc:859
+#line 587 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 4:
-#line 73 "parser.yy" // lalr1.cc:859
+#line 74 "parser.yy" // lalr1.cc:859
     {}
-#line 583 "parser.tab.cc" // lalr1.cc:859
+#line 593 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 5:
-#line 76 "parser.yy" // lalr1.cc:859
+#line 77 "parser.yy" // lalr1.cc:859
     { drv.variables[yystack_[2].value.as< std::string > ()] = yystack_[0].value.as< int > (); }
-#line 589 "parser.tab.cc" // lalr1.cc:859
+#line 599 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 6:
-#line 79 "parser.yy" // lalr1.cc:859
+#line 80 "parser.yy" // lalr1.cc:859
     { yylhs.value.as< int > () = yystack_[2].value.as< int > () + yystack_[0].value.as< int > (); }
-#line 595 "parser.tab.cc" // lalr1.cc:859
+#line 605 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 7:
-#line 80 "parser.yy" // lalr1.cc:859
+#line 81 "parser.yy" // lalr1.cc:859
     { yylhs.value.as< int > () = yystack_[2].value.as< int > () - yystack_[0].value.as< int > (); }
-#line 601 "parser.tab.cc" // lalr1.cc:859
+#line 611 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 8:
-#line 81 "parser.yy" // lalr1.cc:859
+#line 82 "parser.yy" // lalr1.cc:859
     { yylhs.value.as< int > () = yystack_[2].value.as< int > () * yystack_[0].value.as< int > (); }
-#line 607 "parser.tab.cc" // lalr1.cc:859
+#line 617 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 9:
-#line 82 "parser.yy" // lalr1.cc:859
+#line 83 "parser.yy" // lalr1.cc:859
     { yylhs.value.as< int > () = yystack_[2].value.as< int > () / yystack_[0].value.as< int > (); }
-#line 613 "parser.tab.cc" // lalr1.cc:859
+#line 623 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 10:
-#line 83 "parser.yy" // lalr1.cc:859
+#line 84 "parser.yy" // lalr1.cc:859
     { std::swap (yylhs.value.as< int > (), yystack_[1].value.as< int > ()); }
-#line 619 "parser.tab.cc" // lalr1.cc:859
+#line 629 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 11:
-#line 84 "parser.yy" // lalr1.cc:859
+#line 85 "parser.yy" // lalr1.cc:859
     { yylhs.value.as< int > () = drv.variables[yystack_[0].value.as< std::string > ()]; }
-#line 625 "parser.tab.cc" // lalr1.cc:859
+#line 635 "parser.tab.cc" // lalr1.cc:859
     break;
 
   case 12:
-#line 85 "parser.yy" // lalr1.cc:859
+#line 86 "parser.yy" // lalr1.cc:859
     { std::swap (yylhs.value.as< int > (), yystack_[0].value.as< int > ()); }
-#line 631 "parser.tab.cc" // lalr1.cc:859
+#line 641 "parser.tab.cc" // lalr1.cc:859
     break;
 
 
-#line 635 "parser.tab.cc" // lalr1.cc:859
+#line 645 "parser.tab.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -972,8 +982,8 @@ namespace yy {
   const unsigned char
   parser::yyrline_[] =
   {
-       0,    69,    69,    72,    73,    76,    79,    80,    81,    82,
-      83,    84,    85
+       0,    70,    70,    73,    74,    77,    80,    81,    82,    83,
+      84,    85,    86
   };
 
   // Print the state stack on the debug stream.
@@ -1008,8 +1018,8 @@ namespace yy {
 
 
 } // yy
-#line 1012 "parser.tab.cc" // lalr1.cc:1167
-#line 86 "parser.yy" // lalr1.cc:1168
+#line 1022 "parser.tab.cc" // lalr1.cc:1167
+#line 87 "parser.yy" // lalr1.cc:1168
 
 
 void
