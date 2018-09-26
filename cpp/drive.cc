@@ -12,7 +12,7 @@ int
 driver::parse (const std::string &f)
 {
 	file = f;
-	/* initialize location */
+	/* Reset the location to an empty range at the given values. */
 	location.initialize (&file);
 	scan_begin ();
 	yy::parser parser (*this);

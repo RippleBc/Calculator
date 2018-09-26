@@ -53,6 +53,7 @@ RPAREN ")"
 %token <std::string> IDENTIFIER "identifier"
 %token <int> NUMBER "number"
 %type <int> exp
+%type <int> unit
 
 %left "+" "-";
 %left "*" "/";

@@ -24,7 +24,7 @@ public:
 	bool trace_parsing;
 	// Whether to generate scanner debug traces.
 	bool trace_scanning;
-	// The token’s location used by the scanner.
+	/* Create a Location. */
 	yy::location location;
 	// Used to record variable.
 	std::map<std::string, int> variables;
