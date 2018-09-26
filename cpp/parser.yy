@@ -1,17 +1,16 @@
 %skeleton "lalr1.cc" /* -*- C++ -*- */
-%require "3.1"
+%require "3.0.4"
 /* write an extra output fle containing macro defnitions for the token type names defined in the grammar,
  as well as a few other declarations */
 %defines
-/* When variant-based semantic values are enabled (see Section 10.1.2.2
-[C++ Variants], page 158), request that symbols be handled as a whole (type,
-value, and possibly location) in the scanner. */
+/* When variant-based semantic values are enabled,
+ request that symbols be handled as a whole (type, value, and possibly location) in the scanner. */
 %define api.token.constructor
 /* This is similar to union,
  but special storage techniques are used to allow any kind of C++ object to be used. */
 %define api.value.type variant
-/*  In C++, when variants are used (see Section 10.1.2.2 [C++ Variants], page 158),
- symbols must be constructed and destroyed properly. This option checks these constraints. */
+/*  In C++, when variants are used, symbols must be constructed and destroyed properly.
+ This option checks these constraints. */
 %define parse.assert
 
 %code requires {
@@ -19,11 +18,15 @@ value, and possibly location) in the scanner. */
 	class driver;
 }
 
-/* Specify that argument-declaration are additional yylex/yyparse argument declaration. */
-%param { driver& drv }
-/* Generate the code processing the locations */
+/* Specify that argument-declaration are additional yylex argument declaration. */
+%lex-param { driver& drv }
+/* Specify that argument-declaration are additional yyparse argument declaration. */
+%parse-param { parse-param }
+/* Generate the code processing the locations.
+ @$, Acts like a structure variable containing information on the textual location of the grouping made by the current rule.
+ @n, Acts like a structure variable containing information on the textual location of the nth component of the current rule. */
 %locations
-/* enable parser tracing */
+/* enable parser tracing. Each step taken by the parser when yydebug is nonzero produces a line or two of trace information, written on stderr */
 %define parse.trace
 /* enable verbose error messages */
 %define parse.error verbose

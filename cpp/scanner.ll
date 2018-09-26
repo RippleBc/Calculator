@@ -20,8 +20,8 @@
 # pragma GCC diagnostic ignored "-Wnull-dereference"
 #endif
 
-// Code run each time a pattern is matched.
-// yyleng	current matched text's length
+/* Code run each time a pattern is matched.
+ yyleng	current matched text's length */
 # define YY_USER_ACTION loc.columns (yyleng);
 
 #define MAX_INCLUDE_DEPTH 10

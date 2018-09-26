@@ -28,7 +28,7 @@ public:
 	yy::location location;
 	// Used to record variable.
 	std::map<std::string, int> variables;
-	//
+	// Used to record the result of the program
 	int result;
 	// Run the parser on file F. Return 0 on success.
 	int parse (const std::string& f);
