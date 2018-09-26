@@ -12,7 +12,7 @@ main (int argc, char *argv[])
 		else if (argv[i] == std::string ("-s"))
 			drv.trace_scanning = true;
 		else if (!drv.parse (argv[i]))
-			std::cout << drv.result << '\n';
+			std::cout << "this is reulst: " << drv.result << '\n';
 		else
 			res = 1;
 	return res;
