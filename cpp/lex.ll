@@ -3,10 +3,10 @@
 #include <climits>
 #include <cstdlib>
 #include <string>
-#include <iostream>     // std::ios, std::istream, std::cout
-#include <fstream>      // std::filebuf
+#include <iostream>
+#include <fstream>
 #include "driver.hh"
-#include "parser.hh"
+#include "parser.tab.hh"
 // Work around an incompatibility in flex (at least versions
 // 2.5.31 through 2.5.33): it generates code that does
 // not conform to C89. See Debian bug 333231
@@ -21,7 +21,6 @@
 %}
 
 %option noyywrap nounput batch debug noinput
-%option c++
 
 id [a-zA-Z][a-zA-Z_0-9]*
 int [0-9]+
@@ -68,27 +67,18 @@ blank [ \t]
 <<EOF>> return yy::parser::make_END (loc);
 %%
 
+
 void
 driver::scan_begin ()
 {
-	std::istream *is = nullptr;
-
-	std::filebuf fb;
-	if (file.empty () || file == "-") {
-		is = new std::istream(&stdin);
-	}
-  if (!fb.open ("test.txt", std::ios::in))
-  {
-  	std::cerr << "cannot open " << file << ": " << strerror(errno) << ’\n’;
+	yy_flex_debug = trace_scanning;
+	if (file.empty () || file == "-")
+		yyin = stdin;
+	else if (!(yyin = fopen (file.c_str (), "r")))
+	{
+		std::cerr << "cannot open " << file << ": " << strerror(errno) << '\n';
 		exit (EXIT_FAILURE);
-  } else {
-  	is = new std::istream(&fb);
-  }
-
-	 = new yyFlexLexer(is);
-  lexer -> set_debug(trace_scanning)
-
-	return 0;
+	}
 }
 
 void

@@ -2,7 +2,7 @@
 # define DRIVER_HH
 # include <string>
 # include <map>
-# include "parser.hh"
+# include "parser.tab.hh"
 
 /* If you specifed both %define api.value.type variant and %define api.token.constructor,
 the parser class also defines the class parser::symbol_type which defnes a complete symbol, 
