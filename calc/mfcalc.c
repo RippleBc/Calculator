@@ -458,8 +458,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    54,    54,    55,    59,    60,    61,    65,    66,    67,
-      68,    69,    70,    71,    72,    84,    85,    86
+       0,    52,    52,    53,    57,    58,    59,    63,    64,    65,
+      66,    67,    68,    69,    70,    82,    83,    84
 };
 #endif
 
@@ -728,7 +728,7 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 48 "calc/mfcalc.y" /* yacc.c:684  */
+#line 46 "calc/mfcalc.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%d\n", (*(double*)(&(*yyvaluep)))); 
 }
@@ -736,7 +736,7 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
         break;
 
     case 4: /* VAR  */
-#line 41 "calc/mfcalc.y" /* yacc.c:684  */
+#line 39 "calc/mfcalc.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%s\n", (*(symrec**)(&(*yyvaluep)))->name);
 }
@@ -744,7 +744,7 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
         break;
 
     case 5: /* FNCT  */
-#line 45 "calc/mfcalc.y" /* yacc.c:684  */
+#line 43 "calc/mfcalc.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%s()\n", (*(symrec**)(&(*yyvaluep)))->name);
 }
@@ -752,7 +752,7 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
         break;
 
     case 19: /* exp  */
-#line 48 "calc/mfcalc.y" /* yacc.c:684  */
+#line 46 "calc/mfcalc.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%d\n", (*(double*)(&(*yyvaluep)))); 
 }
@@ -1103,7 +1103,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 36 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 34 "calc/mfcalc.y" /* yacc.c:1257  */
       {
 	printf("discard symbol, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); 
 }
@@ -1111,7 +1111,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
         break;
 
     case 4: /* VAR  */
-#line 30 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 28 "calc/mfcalc.y" /* yacc.c:1257  */
       {
 	printf("discard symbol named %s, position %lf %lf.\n", (*(symrec**)(&(*yyvaluep)))->name, (*yylocationp).first_line, (*yylocationp).first_column); 
 }
@@ -1119,7 +1119,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
         break;
 
     case 5: /* FNCT  */
-#line 33 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 31 "calc/mfcalc.y" /* yacc.c:1257  */
       {
 	printf("discard symbol named %s, position %lf %lf.\n", (*(symrec**)(&(*yyvaluep)))->name, (*yylocationp).first_line, (*yylocationp).first_column); 
 }
@@ -1127,7 +1127,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
         break;
 
     case 19: /* exp  */
-#line 36 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 34 "calc/mfcalc.y" /* yacc.c:1257  */
       {
 	printf("discard symbol, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); 
 }
@@ -1417,61 +1417,61 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 60 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 58 "calc/mfcalc.y" /* yacc.c:1646  */
     { printf ("\t%.10g\n", (*(double*)(&yyvsp[-1]))); }
 #line 1423 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 61 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 59 "calc/mfcalc.y" /* yacc.c:1646  */
     { yyerror; }
 #line 1429 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 65 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 63 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0]));	}
 #line 1435 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 66 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 64 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(symrec**)(&yyvsp[0]))->value.var; }
 #line 1441 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 67 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 65 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0])); (*(symrec**)(&yyvsp[-2]))->value.var = (*(double*)(&yyvsp[0])); }
 #line 1447 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 68 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 66 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*((*(symrec**)(&yyvsp[-3]))->value.fnctptr))((*(double*)(&yyvsp[-1]))); }
 #line 1453 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 69 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 67 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) + (*(double*)(&yyvsp[0]));	}
 #line 1459 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 70 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 68 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) - (*(double*)(&yyvsp[0]));	}
 #line 1465 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 71 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 69 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) * (*(double*)(&yyvsp[0]));	}
 #line 1471 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 73 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 71 "calc/mfcalc.y" /* yacc.c:1646  */
     {
 	if((*(double*)(&yyvsp[0])))
 	{
@@ -1487,19 +1487,19 @@ yyreduce:
     break;
 
   case 15:
-#line 84 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 82 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = -(*(double*)(&yyvsp[0])); }
 #line 1493 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 85 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 83 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = pow((*(double*)(&yyvsp[-2])), (*(double*)(&yyvsp[0]))); }
 #line 1499 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 86 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 84 "calc/mfcalc.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-1])); }
 #line 1505 "calc/mfcalc.c" /* yacc.c:1646  */
     break;
@@ -1740,7 +1740,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 88 "calc/mfcalc.y" /* yacc.c:1906  */
+#line 86 "calc/mfcalc.y" /* yacc.c:1906  */
 
 
 symrec *putsym(char const *sym_name, int sym_type)

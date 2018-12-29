@@ -1,7 +1,7 @@
 FLEX=flex
 FLEXFLAGS=-o
 BISON=bison
-BISONFLAGS=-o
+BISONFLAGS=-t --report=itemset -o 
 CC=gcc
 CFLAGS=-g -Wall -lm
 

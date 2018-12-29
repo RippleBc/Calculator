@@ -57,6 +57,8 @@ exp (19)
 State 0
 
     0 $accept: . input $end
+    1 input: . %empty
+    2      | . input line
 
     $default  reduce using rule 1 (input)
 
@@ -67,6 +69,20 @@ State 1
 
     0 $accept: input . $end
     2 input: input . line
+    3 line: . '\n'
+    4     | . exp '\n'
+    5     | . error '\n'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     $end   shift, and go to state 2
     error  shift, and go to state 3
@@ -121,7 +137,18 @@ State 6
 
 State 7
 
-   14 exp: '-' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   14    | '-' . exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -141,7 +168,18 @@ State 8
 
 State 9
 
-   16 exp: '(' . exp ')'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
+   16    | '(' . exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -185,7 +223,18 @@ State 12
 
 State 13
 
-    8 exp: VAR '=' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    8    | VAR '=' . exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -198,7 +247,18 @@ State 13
 
 State 14
 
-    9 exp: FNCT '(' . exp ')'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+    9    | FNCT '(' . exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -242,7 +302,18 @@ State 16
 
 State 17
 
-   11 exp: exp '-' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   11    | exp '-' . exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -255,7 +326,18 @@ State 17
 
 State 18
 
-   10 exp: exp '+' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   10    | exp '+' . exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -268,7 +350,18 @@ State 18
 
 State 19
 
-   12 exp: exp '*' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   12    | exp '*' . exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -281,7 +374,18 @@ State 19
 
 State 20
 
-   13 exp: exp '/' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   13    | exp '/' . exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5
@@ -294,7 +398,18 @@ State 20
 
 State 21
 
-   15 exp: exp '^' . exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   15    | exp '^' . exp
+   16    | . '(' exp ')'
 
     NUM   shift, and go to state 4
     VAR   shift, and go to state 5

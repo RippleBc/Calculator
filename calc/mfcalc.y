@@ -15,8 +15,6 @@ void yyerror (char const *);
 %require "3.0.4"
 
 %define api.value.type union
-%verbose
-%define parse.trace
 
 %token <double> NUM
 %token <symrec*> VAR FNCT
