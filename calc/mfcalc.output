@@ -1,14 +1,3 @@
-Terminals unused in grammar
-
-   STRING
-   EQU
-   MIN
-   PLUS
-   MUL
-   DIV
-   EXP
-
-
 语法
 
     0 $accept: input $end
@@ -49,25 +38,18 @@ error (256) 5
 NUM (258) 6
 VAR (259) 7 8
 FNCT (260) 9
-STRING (261)
-EQU (262)
-MIN (263)
-PLUS (264)
-MUL (265)
-DIV (266)
-NEG (267)
-EXP (268)
+NEG (261)
 
 
 Nonterminals, with rules where they appear
 
-$accept (23)
+$accept (16)
     左： 0
-input (24)
+input (17)
     左： 1 2, 右： 0 2
-line (25)
+line (18)
     左： 3 4 5, 右： 2
-exp (26)
+exp (19)
     左： 6 7 8 9 10 11 12 13 14 15 16, 右： 4 8 9 10 11 12 13 14
     15 16
 
