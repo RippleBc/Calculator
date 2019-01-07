@@ -356,7 +356,7 @@ extern int yylex \
 #undef YY_DECL
 #endif
 
-#line 70 "calc/scanner.l"
+#line 104 "calc/scanner.l"
 
 
 #line 363 "./calc/scanner.h"

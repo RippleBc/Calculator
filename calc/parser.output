@@ -7,36 +7,37 @@
 
     3 line: '\n'
     4     | exp '\n'
+    5     | error '\n'
 
-    5 exp: NUM
-    6    | VAR
-    7    | VAR '=' exp
-    8    | FNCT '(' exp ')'
-    9    | exp '+' exp
-   10    | exp '-' exp
-   11    | exp '*' exp
-   12    | exp '/' exp
-   13    | '-' exp
-   14    | exp '^' exp
-   15    | '(' exp ')'
+    6 exp: NUM
+    7    | VAR
+    8    | VAR '=' exp
+    9    | FNCT '(' exp ')'
+   10    | exp '+' exp
+   11    | exp '-' exp
+   12    | exp '*' exp
+   13    | exp '/' exp
+   14    | '-' exp
+   15    | exp '^' exp
+   16    | '(' exp ')'
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'\n' (10) 3 4
-'(' (40) 8 15
-')' (41) 8 15
-'*' (42) 11
-'+' (43) 9
-'-' (45) 10 13
-'/' (47) 12
-'=' (61) 7
-'^' (94) 14
-error (256)
-NUM (258) 5
-VAR (259) 6 7
-FNCT (260) 8
+'\n' (10) 3 4 5
+'(' (40) 9 16
+')' (41) 9 16
+'*' (42) 12
+'+' (43) 10
+'-' (45) 11 14
+'/' (47) 13
+'=' (61) 8
+'^' (94) 15
+error (256) 5
+NUM (258) 6
+VAR (259) 7 8
+FNCT (260) 9
 NEG (261)
 
 
@@ -47,10 +48,10 @@ $accept (16)
 input (17)
     左： 1 2, 右： 0 2
 line (18)
-    左： 3 4, 右： 2
+    左： 3 4 5, 右： 2
 exp (19)
-    左： 5 6 7 8 9 10 11 12 13 14 15, 右： 4 7 8 9 10 11 12 13
-    14 15
+    左： 6 7 8 9 10 11 12 13 14 15 16, 右： 4 8 9 10 11 12 13 14
+    15 16
 
 
 State 0
@@ -70,28 +71,30 @@ State 1
     2 input: input . line
     3 line: . '\n'
     4     | . exp '\n'
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+    5     | . error '\n'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
-    $end  shift, and go to state 2
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '\n'  shift, and go to state 7
-    '('   shift, and go to state 8
+    $end   shift, and go to state 2
+    error  shift, and go to state 3
+    NUM    shift, and go to state 4
+    VAR    shift, and go to state 5
+    FNCT   shift, and go to state 6
+    '-'    shift, and go to state 7
+    '\n'   shift, and go to state 8
+    '('    shift, and go to state 9
 
-    line  转到状态 9
-    exp   转到状态 10
+    line  转到状态 10
+    exp   转到状态 11
 
 
 State 2
@@ -103,431 +106,445 @@ State 2
 
 State 3
 
-    5 exp: NUM .
+    5 line: error . '\n'
 
-    $default  reduce using rule 5 (exp)
+    '\n'  shift, and go to state 12
 
 
 State 4
 
-    6 exp: VAR .
-    7    | VAR . '=' exp
-
-    '='  shift, and go to state 11
+    6 exp: NUM .
 
     $default  reduce using rule 6 (exp)
 
 
 State 5
 
-    8 exp: FNCT . '(' exp ')'
+    7 exp: VAR .
+    8    | VAR . '=' exp
 
-    '('  shift, and go to state 12
+    '='  shift, and go to state 13
+
+    $default  reduce using rule 7 (exp)
 
 
 State 6
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   13    | '-' . exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+    9 exp: FNCT . '(' exp ')'
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
-
-    exp  转到状态 13
+    '('  shift, and go to state 14
 
 
 State 7
+
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   14    | '-' . exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
+
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
+
+    exp  转到状态 15
+
+
+State 8
 
     3 line: '\n' .
 
     $default  reduce using rule 3 (line)
 
 
-State 8
-
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
-   15    | '(' . exp ')'
-
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
-
-    exp  转到状态 14
-
-
 State 9
+
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
+   16    | '(' . exp ')'
+
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
+
+    exp  转到状态 16
+
+
+State 10
 
     2 input: input line .
 
     $default  reduce using rule 2 (input)
 
 
-State 10
-
-    4 line: exp . '\n'
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
-
-    '-'   shift, and go to state 15
-    '+'   shift, and go to state 16
-    '*'   shift, and go to state 17
-    '/'   shift, and go to state 18
-    '^'   shift, and go to state 19
-    '\n'  shift, and go to state 20
-
-
 State 11
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    7    | VAR '=' . exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+    4 line: exp . '\n'
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
-
-    exp  转到状态 21
+    '-'   shift, and go to state 17
+    '+'   shift, and go to state 18
+    '*'   shift, and go to state 19
+    '/'   shift, and go to state 20
+    '^'   shift, and go to state 21
+    '\n'  shift, and go to state 22
 
 
 State 12
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    8    | FNCT '(' . exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+    5 line: error '\n' .
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
-
-    exp  转到状态 22
+    $default  reduce using rule 5 (line)
 
 
 State 13
 
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   13    | '-' exp .
-   14    | exp . '^' exp
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    8    | VAR '=' . exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
-    '^'  shift, and go to state 19
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
 
-    $default  reduce using rule 13 (exp)
+    exp  转到状态 23
 
 
 State 14
 
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
-   15    | '(' exp . ')'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+    9    | FNCT '(' . exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
-    '-'  shift, and go to state 15
-    '+'  shift, and go to state 16
-    '*'  shift, and go to state 17
-    '/'  shift, and go to state 18
-    '^'  shift, and go to state 19
-    ')'  shift, and go to state 23
-
-
-State 15
-
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   10    | exp '-' . exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
-
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
 
     exp  转到状态 24
 
 
+State 15
+
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   14    | '-' exp .
+   15    | exp . '^' exp
+
+    '^'  shift, and go to state 21
+
+    $default  reduce using rule 14 (exp)
+
+
 State 16
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-    9    | exp '+' . exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
+   16    | '(' exp . ')'
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
-
-    exp  转到状态 25
+    '-'  shift, and go to state 17
+    '+'  shift, and go to state 18
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '^'  shift, and go to state 21
+    ')'  shift, and go to state 25
 
 
 State 17
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   11    | exp '*' . exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   11    | exp '-' . exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
 
     exp  转到状态 26
 
 
 State 18
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   12    | exp '/' . exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   15    | . '(' exp ')'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   10    | exp '+' . exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
 
     exp  转到状态 27
 
 
 State 19
 
-    5 exp: . NUM
-    6    | . VAR
-    7    | . VAR '=' exp
-    8    | . FNCT '(' exp ')'
-    9    | . exp '+' exp
-   10    | . exp '-' exp
-   11    | . exp '*' exp
-   12    | . exp '/' exp
-   13    | . '-' exp
-   14    | . exp '^' exp
-   14    | exp '^' . exp
-   15    | . '(' exp ')'
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   12    | exp '*' . exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
 
-    NUM   shift, and go to state 3
-    VAR   shift, and go to state 4
-    FNCT  shift, and go to state 5
-    '-'   shift, and go to state 6
-    '('   shift, and go to state 8
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
 
     exp  转到状态 28
 
 
 State 20
 
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   13    | exp '/' . exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   16    | . '(' exp ')'
+
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
+
+    exp  转到状态 29
+
+
+State 21
+
+    6 exp: . NUM
+    7    | . VAR
+    8    | . VAR '=' exp
+    9    | . FNCT '(' exp ')'
+   10    | . exp '+' exp
+   11    | . exp '-' exp
+   12    | . exp '*' exp
+   13    | . exp '/' exp
+   14    | . '-' exp
+   15    | . exp '^' exp
+   15    | exp '^' . exp
+   16    | . '(' exp ')'
+
+    NUM   shift, and go to state 4
+    VAR   shift, and go to state 5
+    FNCT  shift, and go to state 6
+    '-'   shift, and go to state 7
+    '('   shift, and go to state 9
+
+    exp  转到状态 30
+
+
+State 22
+
     4 line: exp '\n' .
 
     $default  reduce using rule 4 (line)
 
 
-State 21
-
-    7 exp: VAR '=' exp .
-    9    | exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
-
-    '-'  shift, and go to state 15
-    '+'  shift, and go to state 16
-    '*'  shift, and go to state 17
-    '/'  shift, and go to state 18
-    '^'  shift, and go to state 19
-
-    $default  reduce using rule 7 (exp)
-
-
-State 22
-
-    8 exp: FNCT '(' exp . ')'
-    9    | exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
-
-    '-'  shift, and go to state 15
-    '+'  shift, and go to state 16
-    '*'  shift, and go to state 17
-    '/'  shift, and go to state 18
-    '^'  shift, and go to state 19
-    ')'  shift, and go to state 29
-
-
 State 23
 
-   15 exp: '(' exp ')' .
+    8 exp: VAR '=' exp .
+   10    | exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
 
-    $default  reduce using rule 15 (exp)
+    '-'  shift, and go to state 17
+    '+'  shift, and go to state 18
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '^'  shift, and go to state 21
+
+    $default  reduce using rule 8 (exp)
 
 
 State 24
 
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   10    | exp '-' exp .
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
+    9 exp: FNCT '(' exp . ')'
+   10    | exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
 
-    '*'  shift, and go to state 17
-    '/'  shift, and go to state 18
-    '^'  shift, and go to state 19
-
-    $default  reduce using rule 10 (exp)
+    '-'  shift, and go to state 17
+    '+'  shift, and go to state 18
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '^'  shift, and go to state 21
+    ')'  shift, and go to state 31
 
 
 State 25
 
-    9 exp: exp . '+' exp
-    9    | exp '+' exp .
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
+   16 exp: '(' exp ')' .
 
-    '*'  shift, and go to state 17
-    '/'  shift, and go to state 18
-    '^'  shift, and go to state 19
-
-    $default  reduce using rule 9 (exp)
+    $default  reduce using rule 16 (exp)
 
 
 State 26
 
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   11    | exp '*' exp .
-   12    | exp . '/' exp
-   14    | exp . '^' exp
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   11    | exp '-' exp .
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
 
-    '^'  shift, and go to state 19
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '^'  shift, and go to state 21
 
     $default  reduce using rule 11 (exp)
 
 
 State 27
 
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   12    | exp '/' exp .
-   14    | exp . '^' exp
+   10 exp: exp . '+' exp
+   10    | exp '+' exp .
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
 
-    '^'  shift, and go to state 19
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '^'  shift, and go to state 21
 
-    $default  reduce using rule 12 (exp)
+    $default  reduce using rule 10 (exp)
 
 
 State 28
 
-    9 exp: exp . '+' exp
-   10    | exp . '-' exp
-   11    | exp . '*' exp
-   12    | exp . '/' exp
-   14    | exp . '^' exp
-   14    | exp '^' exp .
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   12    | exp '*' exp .
+   13    | exp . '/' exp
+   15    | exp . '^' exp
 
-    '^'  shift, and go to state 19
+    '^'  shift, and go to state 21
 
-    $default  reduce using rule 14 (exp)
+    $default  reduce using rule 12 (exp)
 
 
 State 29
 
-    8 exp: FNCT '(' exp ')' .
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   13    | exp '/' exp .
+   15    | exp . '^' exp
 
-    $default  reduce using rule 8 (exp)
+    '^'  shift, and go to state 21
+
+    $default  reduce using rule 13 (exp)
+
+
+State 30
+
+   10 exp: exp . '+' exp
+   11    | exp . '-' exp
+   12    | exp . '*' exp
+   13    | exp . '/' exp
+   15    | exp . '^' exp
+   15    | exp '^' exp .
+
+    '^'  shift, and go to state 21
+
+    $default  reduce using rule 15 (exp)
+
+
+State 31
+
+    9 exp: FNCT '(' exp ')' .
+
+    $default  reduce using rule 9 (exp)

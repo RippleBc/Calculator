@@ -45,13 +45,13 @@
 %right '^'
 
 %destructor {
-	printf("discard symbol named %s, position %lf %lf.\n", $$->name, @$.first_line, @$.first_column); 
+	printf("discard symbol named %s, position line: %d, column: %d.\n", $$->name, @$.first_line, @$.first_column); 
 } VAR
 %destructor {
-	printf("discard symbol named %s, position %lf %lf.\n", $$->name, @$.first_line, @$.first_column); 
+	printf("discard symbol named %s, position line: %d, column: %d.\n", $$->name, @$.first_line, @$.first_column); 
 } FNCT
 %destructor {
-	printf("discard symbol value %d, position %lf %lf.\n", $$, @$.first_line, @$.first_column); 
+	printf("discard symbol value %f, position line: %d, column: %d.\n", $$, @$.first_line, @$.first_column); 
 } <double>
 
 %printer
@@ -75,7 +75,7 @@ input:
 line:
 '\n'
 | exp '\n'	{ printf ("\t%.10g\n", $1); }
-
+| error '\n' { yyerror; }
 ;
 
 exp:
@@ -132,7 +132,7 @@ symrec *getsym(char const *sym_name)
 /* Called by yyparse on error.	*/ 
 void yyerror(YYLTYPE *llocp, yyscan_t scanner, char const *s)
 {
-	fprintf(stderr, "yyerror, position line %d, column %d, err cont: %s\n", llocp->last_line, llocp->last_column, s);
+	fprintf(stderr, "yyerror, position line %d, column %d, err content: %s\n", llocp->last_line, llocp->last_column, s);
 }
 
 struct init
