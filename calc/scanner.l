@@ -1,9 +1,8 @@
 %top {
-	
+	#include "parser.h"
 }
 
 %{
-	#include "parser.h"
 	#include "../common.h"
 %}
 

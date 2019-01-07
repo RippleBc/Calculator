@@ -1,6 +1,7 @@
 #line 2 "./calc/scanner.c"
-	
-#line 4 "./calc/scanner.c"
+	#include "parser.h"
+
+#line 5 "./calc/scanner.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -447,7 +448,6 @@ static yyconst flex_int16_t yy_chk[14] =
 #line 1 "calc/scanner.l"
 
 #line 6 "calc/scanner.l"
-	#include "parser.h"
 	#include "../common.h"
 #line 453 "./calc/scanner.c"
 
@@ -734,7 +734,7 @@ YY_DECL
 		}
 
 	{
-#line 17 "calc/scanner.l"
+#line 16 "calc/scanner.l"
 
 
 #line 741 "./calc/scanner.c"
@@ -796,7 +796,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "calc/scanner.l"
+#line 18 "calc/scanner.l"
 {
 	yylval_param->NUM = atoi(yytext);
 	return NUM;
@@ -804,7 +804,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "calc/scanner.l"
+#line 23 "calc/scanner.l"
 {
 	/* try to find the symbol */
 	symrec *s = getsym(yytext); 
@@ -830,19 +830,19 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 46 "calc/scanner.l"
+#line 45 "calc/scanner.l"
 { }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 48 "calc/scanner.l"
+#line 47 "calc/scanner.l"
 {
 	return yytext;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 52 "calc/scanner.l"
+#line 51 "calc/scanner.l"
 ECHO;
 	YY_BREAK
 #line 849 "./calc/scanner.c"
@@ -2038,6 +2038,6 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 52 "calc/scanner.l"
+#line 51 "calc/scanner.l"
 
 

@@ -1,4 +1,3 @@
-#include "./calc/parser.h"
 #include "./calc/scanner.h"
 
 int main(int argc, char const* argv[])
@@ -10,6 +9,6 @@ int main(int argc, char const* argv[])
 	yylex_init(&scanner);
 	
 	yyparse(scanner);
-	
+
 	yylex_destroy(scanner);
 }

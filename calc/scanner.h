@@ -3,8 +3,9 @@
 #define yyIN_HEADER 1
 
 #line 6 "./calc/scanner.h"
-	
-#line 8 "./calc/scanner.h"
+	#include "parser.h"
+
+#line 9 "./calc/scanner.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -355,9 +356,9 @@ extern int yylex \
 #undef YY_DECL
 #endif
 
-#line 52 "calc/scanner.l"
+#line 51 "calc/scanner.l"
 
 
-#line 362 "./calc/scanner.h"
+#line 363 "./calc/scanner.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */
