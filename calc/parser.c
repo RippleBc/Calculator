@@ -50,7 +50,7 @@
 #define YYSKELETON_NAME "yacc.c"
 
 /* Pure parsers.  */
-#define YYPURE 0
+#define YYPURE 2
 
 /* Push parsers.  */
 #define YYPUSH 0
@@ -58,23 +58,22 @@
 /* Pull parsers.  */
 #define YYPULL 1
 
+/* "%code top" blocks.  */
+#line 3 "calc/parser.y" /* yacc.c:316  */
+
+	#include <stdlib.h>
+	#include <stdio.h>
+	#include <math.h>
+	#include <string.h>
+	#include <ctype.h>
+
+#line 71 "calc/parser.c" /* yacc.c:316  */
 
 
 
 /* Copy the first part of user declarations.  */
-#line 3 "calc/mfcalc.y" /* yacc.c:339  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <ctype.h>
-#include "mfcalc.h"
-
-int yylex(void);
-void yyerror (char const *);
-
-#line 78 "calc/mfcalc.c" /* yacc.c:339  */
+#line 77 "calc/parser.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -92,7 +91,10 @@ void yyerror (char const *);
 # define YYERROR_VERBOSE 0
 #endif
 
-
+/* In a future release of Bison, this section will be replaced
+   by #include "parser.h".  */
+#ifndef YY_YY_CALC_PARSER_H_INCLUDED
+# define YY_YY_CALC_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -100,6 +102,12 @@ void yyerror (char const *);
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 11 "calc/parser.y" /* yacc.c:355  */
+
+	#include "../common.h"
+
+#line 111 "calc/parser.c" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -127,7 +135,7 @@ union YYSTYPE
   symrec* VAR;
   /* FNCT  */
   symrec* FNCT;
-#line 131 "calc/mfcalc.c" /* yacc.c:355  */
+#line 139 "calc/parser.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -150,15 +158,27 @@ struct YYLTYPE
 #endif
 
 
-extern YYSTYPE yylval;
-extern YYLTYPE yylloc;
+
 int yyparse (void);
+/* "%code provides" blocks.  */
+#line 15 "calc/parser.y" /* yacc.c:355  */
 
+	void init_table(void);
 
+#line 169 "calc/parser.c" /* yacc.c:355  */
+
+#endif /* !YY_YY_CALC_PARSER_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 162 "calc/mfcalc.c" /* yacc.c:358  */
+#line 175 "calc/parser.c" /* yacc.c:358  */
+/* Unqualified %code blocks.  */
+#line 26 "calc/parser.y" /* yacc.c:359  */
+
+	int yylex(YYSTYPE *, YYLTYPE *);
+	void yyerror(YYLTYPE *, char const *);	
+
+#line 182 "calc/parser.c" /* yacc.c:359  */
 
 #ifdef short
 # undef short
@@ -458,8 +478,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    52,    52,    53,    57,    58,    59,    63,    64,    65,
-      66,    67,    68,    69,    70,    82,    83,    84
+       0,    66,    66,    67,    71,    72,    73,    77,    78,    79,
+      80,    81,    82,    83,    84,    96,    97,    98
 };
 #endif
 
@@ -601,7 +621,7 @@ do                                                              \
     }                                                           \
   else                                                          \
     {                                                           \
-      yyerror (YY_("syntax error: cannot back up")); \
+      yyerror (&yylloc, YY_("syntax error: cannot back up")); \
       YYERROR;                                                  \
     }                                                           \
 while (0)
@@ -728,35 +748,35 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 46 "calc/mfcalc.y" /* yacc.c:684  */
+#line 60 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%d\n", (*(double*)(&(*yyvaluep)))); 
 }
-#line 736 "calc/mfcalc.c" /* yacc.c:684  */
+#line 756 "calc/parser.c" /* yacc.c:684  */
         break;
 
     case 4: /* VAR  */
-#line 39 "calc/mfcalc.y" /* yacc.c:684  */
+#line 53 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%s\n", (*(symrec**)(&(*yyvaluep)))->name);
 }
-#line 744 "calc/mfcalc.c" /* yacc.c:684  */
+#line 764 "calc/parser.c" /* yacc.c:684  */
         break;
 
     case 5: /* FNCT  */
-#line 43 "calc/mfcalc.y" /* yacc.c:684  */
+#line 57 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%s()\n", (*(symrec**)(&(*yyvaluep)))->name);
 }
-#line 752 "calc/mfcalc.c" /* yacc.c:684  */
+#line 772 "calc/parser.c" /* yacc.c:684  */
         break;
 
     case 19: /* exp  */
-#line 46 "calc/mfcalc.y" /* yacc.c:684  */
+#line 60 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%d\n", (*(double*)(&(*yyvaluep)))); 
 }
-#line 760 "calc/mfcalc.c" /* yacc.c:684  */
+#line 780 "calc/parser.c" /* yacc.c:684  */
         break;
 
 
@@ -1103,35 +1123,35 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 34 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 48 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1111 "calc/mfcalc.c" /* yacc.c:1257  */
+#line 1131 "calc/parser.c" /* yacc.c:1257  */
         break;
 
     case 4: /* VAR  */
-#line 28 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 42 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol named %s, position %lf %lf.\n", (*(symrec**)(&(*yyvaluep)))->name, (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1119 "calc/mfcalc.c" /* yacc.c:1257  */
+#line 1139 "calc/parser.c" /* yacc.c:1257  */
         break;
 
     case 5: /* FNCT  */
-#line 31 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 45 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol named %s, position %lf %lf.\n", (*(symrec**)(&(*yyvaluep)))->name, (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1127 "calc/mfcalc.c" /* yacc.c:1257  */
+#line 1147 "calc/parser.c" /* yacc.c:1257  */
         break;
 
     case 19: /* exp  */
-#line 34 "calc/mfcalc.y" /* yacc.c:1257  */
+#line 48 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1135 "calc/mfcalc.c" /* yacc.c:1257  */
+#line 1155 "calc/parser.c" /* yacc.c:1257  */
         break;
 
 
@@ -1144,21 +1164,6 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
 
 
 
-/* The lookahead symbol.  */
-int yychar;
-
-/* The semantic value of the lookahead symbol.  */
-YYSTYPE yylval;
-/* Location data for the lookahead symbol.  */
-YYLTYPE yylloc
-# if defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL
-  = { 1, 1, 1, 1 }
-# endif
-;
-/* Number of syntax errors so far.  */
-int yynerrs;
-
-
 /*----------.
 | yyparse.  |
 `----------*/
@@ -1166,6 +1171,27 @@ int yynerrs;
 int
 yyparse (void)
 {
+/* The lookahead symbol.  */
+int yychar;
+
+
+/* The semantic value of the lookahead symbol.  */
+/* Default value used for initialization, for pacifying older GCCs
+   or non-GCC compilers.  */
+YY_INITIAL_VALUE (static YYSTYPE yyval_default;)
+YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
+
+/* Location data for the lookahead symbol.  */
+static YYLTYPE yyloc_default
+# if defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL
+  = { 1, 1, 1, 1 }
+# endif
+;
+YYLTYPE yylloc = yyloc_default;
+
+    /* Number of syntax errors so far.  */
+    int yynerrs;
+
     int yystate;
     /* Number of tokens to shift before error messages enabled.  */
     int yyerrstatus;
@@ -1337,7 +1363,7 @@ yybackup:
   if (yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token: "));
-      yychar = yylex ();
+      yychar = yylex (&yylval, &yylloc);
     }
 
   if (yychar <= YYEOF)
@@ -1417,61 +1443,61 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 58 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 72 "calc/parser.y" /* yacc.c:1646  */
     { printf ("\t%.10g\n", (*(double*)(&yyvsp[-1]))); }
-#line 1423 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1449 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 59 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 73 "calc/parser.y" /* yacc.c:1646  */
     { yyerror; }
-#line 1429 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1455 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 63 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 77 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0]));	}
-#line 1435 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1461 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 64 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 78 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(symrec**)(&yyvsp[0]))->value.var; }
-#line 1441 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1467 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 65 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 79 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0])); (*(symrec**)(&yyvsp[-2]))->value.var = (*(double*)(&yyvsp[0])); }
-#line 1447 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1473 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 66 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 80 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*((*(symrec**)(&yyvsp[-3]))->value.fnctptr))((*(double*)(&yyvsp[-1]))); }
-#line 1453 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1479 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 67 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 81 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) + (*(double*)(&yyvsp[0]));	}
-#line 1459 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1485 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 68 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 82 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) - (*(double*)(&yyvsp[0]));	}
-#line 1465 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1491 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 69 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 83 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) * (*(double*)(&yyvsp[0]));	}
-#line 1471 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1497 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 71 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 85 "calc/parser.y" /* yacc.c:1646  */
     {
 	if((*(double*)(&yyvsp[0])))
 	{
@@ -1483,29 +1509,29 @@ yyreduce:
 		fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero\n", (yylsp[0]).first_line, (yylsp[0]).first_column, (yylsp[0]).last_line, (yylsp[0]).last_column);
 	}
 }
-#line 1487 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1513 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 82 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 96 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = -(*(double*)(&yyvsp[0])); }
-#line 1493 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1519 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 83 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 97 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = pow((*(double*)(&yyvsp[-2])), (*(double*)(&yyvsp[0]))); }
-#line 1499 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1525 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 84 "calc/mfcalc.y" /* yacc.c:1646  */
+#line 98 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-1])); }
-#line 1505 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1531 "calc/parser.c" /* yacc.c:1646  */
     break;
 
 
-#line 1509 "calc/mfcalc.c" /* yacc.c:1646  */
+#line 1535 "calc/parser.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1556,7 +1582,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (YY_("syntax error"));
+      yyerror (&yylloc, YY_("syntax error"));
 #else
 # define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
                                         yyssp, yytoken)
@@ -1583,7 +1609,7 @@ yyerrlab:
                 yymsgp = yymsg;
               }
           }
-        yyerror (yymsgp);
+        yyerror (&yylloc, yymsgp);
         if (yysyntax_error_status == 2)
           goto yyexhaustedlab;
       }
@@ -1706,7 +1732,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (YY_("memory exhausted"));
+  yyerror (&yylloc, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -1740,7 +1766,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 86 "calc/mfcalc.y" /* yacc.c:1906  */
+#line 100 "calc/parser.y" /* yacc.c:1906  */
 
 
 symrec *putsym(char const *sym_name, int sym_type)
@@ -1769,22 +1795,22 @@ symrec *getsym(char const *sym_name)
 }
 
 /* Called by yyparse on error.	*/ 
-void yyerror(char const *s)
+void yyerror(YYLTYPE *llocp, char const *s)
 {
 	fprintf(stderr, "yyerror: %s\n", s);
 }
 
-int yylex(void)
+int yylex(YYSTYPE *lvalp, YYLTYPE *llocp)
 {
 	int c;
 
 	while((c = getchar()) == ' ' || c == '\t')
 	{
-		++yylloc.last_column;
+		++llocp->last_column;
 	}
 
-	yylloc.first_line = yylloc.last_line;
-	yylloc.first_column = yylloc.last_column;
+	llocp->first_line = llocp->last_line;
+	llocp->first_column = llocp->last_column;
 
 	if(c == EOF)
 	{
@@ -1801,7 +1827,7 @@ int yylex(void)
 		}
 
 		double num = c - '0';
-		++yylloc.last_column;
+		++llocp->last_column;
 		while(isdigit(c = getchar()) || c == '.')
 		{
 			if(dcimalStartMark == 1) 
@@ -1815,12 +1841,12 @@ int yylex(void)
 			}
 
 			/* update location. */
-			++yylloc.last_column;
+			++llocp->last_column;
 
 			num = num * 10 + c - '0';
 		}
 
-		yylval.NUM = num / decimalSize;
+		lvalp->NUM = num / decimalSize;
 
 		ungetc(c, stdin);
 
@@ -1856,7 +1882,7 @@ int yylex(void)
 			c = getchar();
 
 			/* update location. */
-			++yylloc.last_column;
+			++llocp->last_column;
 		}
 		while(isalnum(c));
 
@@ -1874,11 +1900,11 @@ int yylex(void)
 
 		if(s->type == VAR)
 		{
-			yylval.VAR = s;
+			lvalp->VAR = s;
 		}
 		else
 		{
-			yylval.FNCT = s;
+			lvalp->FNCT = s;
 		}
 		
 		return s->type;
@@ -1887,12 +1913,12 @@ int yylex(void)
 	/* update location. */
 	if(c == '\n')
 	{
-  	++yylloc.last_line;
-  	yylloc.last_column = 0;
+  	++llocp->last_line;
+  	llocp->last_column = 0;
   }
   else
   {
-  	++yylloc.last_column;
+  	++llocp->last_column;
   }
 
 	/* Any other character is a token by itself.	*/ 
@@ -1936,7 +1962,7 @@ struct init_constant const constants[] =
 symrec *sym_table;
 
 /* Put arithmetic functions in table.	*/ 
-static void init_table(void)
+void init_table(void)
 {
 	int i;
 	for(i = 0; arith_fncts[i].fname != 0; i++)
@@ -1950,13 +1976,4 @@ static void init_table(void)
 		symrec *ptr = putsym(constants[i].vname, VAR);
 		ptr->value.var = constants[i].val;
 	}
-}
-
-int main(int argc, char const* argv[])
-{
-	yylloc.first_line = yylloc.last_line = 1;
-	yylloc.first_column = yylloc.last_column = 0;
-	yydebug = 1;
-	init_table(); 
-	return yyparse();
 }

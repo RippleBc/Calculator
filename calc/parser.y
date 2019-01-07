@@ -1,20 +1,34 @@
 /* Reverse Polish Notation calculator. */
 
-%{
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <ctype.h>
-#include "mfcalc.h"
+%code top {
+	#include <stdlib.h>
+	#include <stdio.h>
+	#include <math.h>
+	#include <string.h>
+	#include <ctype.h>
+}
 
-int yylex(void);
-void yyerror (char const *);
-%}
+%code requires {
+	#include "../common.h"
+}
+
+%code provides {
+	void init_table(void);
+}
 
 %require "3.0.4"
 
+%define api.pure full
+%locations
+
 %define api.value.type union
+
+%code {
+	int yylex(YYSTYPE *, YYLTYPE *);
+	void yyerror(YYLTYPE *, char const *);	
+}
+
+%defines
 
 %token <double> NUM
 %token <symrec*> VAR FNCT
@@ -111,22 +125,22 @@ symrec *getsym(char const *sym_name)
 }
 
 /* Called by yyparse on error.	*/ 
-void yyerror(char const *s)
+void yyerror(YYLTYPE *llocp, char const *s)
 {
 	fprintf(stderr, "yyerror: %s\n", s);
 }
 
-int yylex(void)
+int yylex(YYSTYPE *lvalp, YYLTYPE *llocp)
 {
 	int c;
 
 	while((c = getchar()) == ' ' || c == '\t')
 	{
-		++yylloc.last_column;
+		++llocp->last_column;
 	}
 
-	yylloc.first_line = yylloc.last_line;
-	yylloc.first_column = yylloc.last_column;
+	llocp->first_line = llocp->last_line;
+	llocp->first_column = llocp->last_column;
 
 	if(c == EOF)
 	{
@@ -143,7 +157,7 @@ int yylex(void)
 		}
 
 		double num = c - '0';
-		++yylloc.last_column;
+		++llocp->last_column;
 		while(isdigit(c = getchar()) || c == '.')
 		{
 			if(dcimalStartMark == 1) 
@@ -157,12 +171,12 @@ int yylex(void)
 			}
 
 			/* update location. */
-			++yylloc.last_column;
+			++llocp->last_column;
 
 			num = num * 10 + c - '0';
 		}
 
-		yylval.NUM = num / decimalSize;
+		lvalp->NUM = num / decimalSize;
 
 		ungetc(c, stdin);
 
@@ -198,7 +212,7 @@ int yylex(void)
 			c = getchar();
 
 			/* update location. */
-			++yylloc.last_column;
+			++llocp->last_column;
 		}
 		while(isalnum(c));
 
@@ -216,11 +230,11 @@ int yylex(void)
 
 		if(s->type == VAR)
 		{
-			yylval.VAR = s;
+			lvalp->VAR = s;
 		}
 		else
 		{
-			yylval.FNCT = s;
+			lvalp->FNCT = s;
 		}
 		
 		return s->type;
@@ -229,12 +243,12 @@ int yylex(void)
 	/* update location. */
 	if(c == '\n')
 	{
-  	++yylloc.last_line;
-  	yylloc.last_column = 0;
+  	++llocp->last_line;
+  	llocp->last_column = 0;
   }
   else
   {
-  	++yylloc.last_column;
+  	++llocp->last_column;
   }
 
 	/* Any other character is a token by itself.	*/ 
@@ -278,7 +292,7 @@ struct init_constant const constants[] =
 symrec *sym_table;
 
 /* Put arithmetic functions in table.	*/ 
-static void init_table(void)
+void init_table(void)
 {
 	int i;
 	for(i = 0; arith_fncts[i].fname != 0; i++)
@@ -292,13 +306,4 @@ static void init_table(void)
 		symrec *ptr = putsym(constants[i].vname, VAR);
 		ptr->value.var = constants[i].val;
 	}
-}
-
-int main(int argc, char const* argv[])
-{
-	yylloc.first_line = yylloc.last_line = 1;
-	yylloc.first_column = yylloc.last_column = 0;
-	yydebug = 1;
-	init_table(); 
-	return yyparse();
 }

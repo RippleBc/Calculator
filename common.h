@@ -1,3 +1,6 @@
+#ifndef _COMMON_H_
+#define _COMMON_H_
+
 typedef double (*func_t) (double);
 
 /* Data type for links in the chain of symbols.	*/ 
@@ -18,5 +21,6 @@ typedef struct symrec symrec;
 /* The symbol table: a chain of ’struct symrec’.	*/ 
 extern symrec *sym_table;
 
-symrec *putsym (char const *, int); 
-symrec *getsym (char const *);
+extern symrec *putsym (char const *, int); 
+extern symrec *getsym (char const *);
+#endif

@@ -1,5 +1,5 @@
 FLEX=flex
-FLEXFLAGS=-o
+FLEXFLAGS=
 BISON=bison
 BISONFLAGS=-t --report=itemset -o 
 CC=gcc
@@ -39,12 +39,13 @@ $(OBJS_DIR)/%.o:%.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 pre:
-	$(BISON) $(BISONFLAGS) calc/mfcalc.c calc/mfcalc.y
+	$(BISON) $(BISONFLAGS) calc/parser.c calc/parser.y
+	$(FLEX) $(FLEXFLAGS) calc/scanner.l
 
 clean:
 	rm -f debug/mfcalc
 	rm -f $(OBJS_DIR)/*.o
-	rm -f calc/mfcalc.output
+	rm -f calc/parser.output
 
 cleanall:clean
-	rm -f calc/mfcalc.h calc/mfcalc.c
+	rm -f calc/parser.h calc/parser.c
