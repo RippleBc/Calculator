@@ -11,6 +11,7 @@
 %code requires {
 	#include "../common.h"
 
+	#define YY_TYPEDEF_YY_SCANNER_T
 	typedef void* yyscan_t;
 }
 
@@ -50,7 +51,7 @@
 	printf("discard symbol named %s, position %lf %lf.\n", $$->name, @$.first_line, @$.first_column); 
 } FNCT
 %destructor {
-	printf("discard symbol, position %lf %lf.\n", @$.first_line, @$.first_column); 
+	printf("discard symbol value %d, position %lf %lf.\n", $$, @$.first_line, @$.first_column); 
 } <double>
 
 %printer
@@ -74,12 +75,12 @@ input:
 line:
 '\n'
 | exp '\n'	{ printf ("\t%.10g\n", $1); }
-| error '\n' { yyerror; }
+
 ;
 
 exp:
-NUM	{ $$ = $1;	}
-| VAR { $$ = $VAR->value.var; }
+NUM	{ $$ = $1; }
+| VAR { $$ = $1->value.var; }
 | VAR '=' exp { $$ = $3; $1->value.var = $3; }
 | FNCT '(' exp ')' { $$ = (*($1->value.fnctptr))($3); }
 | exp '+' exp	{ $$ = $1 + $3;	}
@@ -131,7 +132,7 @@ symrec *getsym(char const *sym_name)
 /* Called by yyparse on error.	*/ 
 void yyerror(YYLTYPE *llocp, yyscan_t scanner, char const *s)
 {
-	fprintf(stderr, "yyerror: %s\n", s);
+	fprintf(stderr, "yyerror, position line %d, column %d, err cont: %s\n", llocp->last_line, llocp->last_column, s);
 }
 
 struct init

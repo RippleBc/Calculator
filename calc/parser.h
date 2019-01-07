@@ -44,9 +44,10 @@ extern int yydebug;
 
 	#include "../common.h"
 
+	#define YY_TYPEDEF_YY_SCANNER_T
 	typedef void* yyscan_t;
 
-#line 50 "calc/parser.h" /* yacc.c:1909  */
+#line 51 "calc/parser.h" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -74,7 +75,7 @@ union YYSTYPE
   symrec* VAR;
   /* FNCT  */
   symrec* FNCT;
-#line 78 "calc/parser.h" /* yacc.c:1909  */
+#line 79 "calc/parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -100,10 +101,10 @@ struct YYLTYPE
 
 int yyparse (yyscan_t scanner);
 /* "%code provides" blocks.  */
-#line 17 "calc/parser.y" /* yacc.c:1909  */
+#line 18 "calc/parser.y" /* yacc.c:1909  */
 
 	void init_table(void);
 
-#line 108 "calc/parser.h" /* yacc.c:1909  */
+#line 109 "calc/parser.h" /* yacc.c:1909  */
 
 #endif /* !YY_YY_CALC_PARSER_H_INCLUDED  */

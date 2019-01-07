@@ -42,10 +42,30 @@ ID [a-z][a-z0-9]*
 	return s->type;
 }
 
-"\n" { }
+"\n" {
+	yylloc_param->first_line = yylloc_param->last_line;
+	yylloc_param->last_line++;
 
-. {
-	return yytext;
+	return '\n';
 }
 
+"+" {
+	return '+';
+}
+
+"-" {
+	return '-';
+}
+
+"*" {
+	return '*';
+}
+
+"/" {
+	return '/';
+}
+
+. { /* eat up not matched character */ }
+
 %%
+
