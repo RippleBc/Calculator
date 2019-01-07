@@ -107,7 +107,9 @@ extern int yydebug;
 
 	#include "../common.h"
 
-#line 111 "calc/parser.c" /* yacc.c:355  */
+	typedef void* yyscan_t;
+
+#line 113 "calc/parser.c" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -135,7 +137,7 @@ union YYSTYPE
   symrec* VAR;
   /* FNCT  */
   symrec* FNCT;
-#line 139 "calc/parser.c" /* yacc.c:355  */
+#line 141 "calc/parser.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -159,26 +161,26 @@ struct YYLTYPE
 
 
 
-int yyparse (void);
+int yyparse (yyscan_t scanner);
 /* "%code provides" blocks.  */
-#line 15 "calc/parser.y" /* yacc.c:355  */
+#line 17 "calc/parser.y" /* yacc.c:355  */
 
 	void init_table(void);
 
-#line 169 "calc/parser.c" /* yacc.c:355  */
+#line 171 "calc/parser.c" /* yacc.c:355  */
 
 #endif /* !YY_YY_CALC_PARSER_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 175 "calc/parser.c" /* yacc.c:358  */
+#line 177 "calc/parser.c" /* yacc.c:358  */
 /* Unqualified %code blocks.  */
-#line 26 "calc/parser.y" /* yacc.c:359  */
+#line 30 "calc/parser.y" /* yacc.c:359  */
 
-	int yylex(YYSTYPE *, YYLTYPE *);
-	void yyerror(YYLTYPE *, char const *);	
+	int yylex(YYSTYPE *, YYLTYPE *, yyscan_t);
+	void yyerror(YYLTYPE *, yyscan_t, char const *);	
 
-#line 182 "calc/parser.c" /* yacc.c:359  */
+#line 184 "calc/parser.c" /* yacc.c:359  */
 
 #ifdef short
 # undef short
@@ -478,8 +480,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    66,    66,    67,    71,    72,    73,    77,    78,    79,
-      80,    81,    82,    83,    84,    96,    97,    98
+       0,    70,    70,    71,    75,    76,    77,    81,    82,    83,
+      84,    85,    86,    87,    88,   100,   101,   102
 };
 #endif
 
@@ -621,7 +623,7 @@ do                                                              \
     }                                                           \
   else                                                          \
     {                                                           \
-      yyerror (&yylloc, YY_("syntax error: cannot back up")); \
+      yyerror (&yylloc, scanner, YY_("syntax error: cannot back up")); \
       YYERROR;                                                  \
     }                                                           \
 while (0)
@@ -723,7 +725,7 @@ do {                                                                      \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
-                  Type, Value, Location); \
+                  Type, Value, Location, scanner); \
       YYFPRINTF (stderr, "\n");                                           \
     }                                                                     \
 } while (0)
@@ -734,11 +736,12 @@ do {                                                                      \
 `----------------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, yyscan_t scanner)
 {
   FILE *yyo = yyoutput;
   YYUSE (yyo);
   YYUSE (yylocationp);
+  YYUSE (scanner);
   if (!yyvaluep)
     return;
 # ifdef YYPRINT
@@ -748,35 +751,35 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 60 "calc/parser.y" /* yacc.c:684  */
+#line 64 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%d\n", (*(double*)(&(*yyvaluep)))); 
 }
-#line 756 "calc/parser.c" /* yacc.c:684  */
+#line 759 "calc/parser.c" /* yacc.c:684  */
         break;
 
     case 4: /* VAR  */
-#line 53 "calc/parser.y" /* yacc.c:684  */
+#line 57 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%s\n", (*(symrec**)(&(*yyvaluep)))->name);
 }
-#line 764 "calc/parser.c" /* yacc.c:684  */
+#line 767 "calc/parser.c" /* yacc.c:684  */
         break;
 
     case 5: /* FNCT  */
-#line 57 "calc/parser.y" /* yacc.c:684  */
+#line 61 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%s()\n", (*(symrec**)(&(*yyvaluep)))->name);
 }
-#line 772 "calc/parser.c" /* yacc.c:684  */
+#line 775 "calc/parser.c" /* yacc.c:684  */
         break;
 
     case 19: /* exp  */
-#line 60 "calc/parser.y" /* yacc.c:684  */
+#line 64 "calc/parser.y" /* yacc.c:684  */
       {
 	fprintf(yyoutput, "%d\n", (*(double*)(&(*yyvaluep)))); 
 }
-#line 780 "calc/parser.c" /* yacc.c:684  */
+#line 783 "calc/parser.c" /* yacc.c:684  */
         break;
 
 
@@ -791,14 +794,14 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
 `--------------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, yyscan_t scanner)
 {
   YYFPRINTF (yyoutput, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
   YY_LOCATION_PRINT (yyoutput, *yylocationp);
   YYFPRINTF (yyoutput, ": ");
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp);
+  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp, scanner);
   YYFPRINTF (yyoutput, ")");
 }
 
@@ -831,7 +834,7 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule)
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule, yyscan_t scanner)
 {
   unsigned long int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
@@ -845,7 +848,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule
       yy_symbol_print (stderr,
                        yystos[yyssp[yyi + 1 - yynrhs]],
                        &yyvsp[(yyi + 1) - (yynrhs)]
-                       , &(yylsp[(yyi + 1) - (yynrhs)])                       );
+                       , &(yylsp[(yyi + 1) - (yynrhs)])                       , scanner);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -853,7 +856,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule
 # define YY_REDUCE_PRINT(Rule)          \
 do {                                    \
   if (yydebug)                          \
-    yy_reduce_print (yyssp, yyvsp, yylsp, Rule); \
+    yy_reduce_print (yyssp, yyvsp, yylsp, Rule, scanner); \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1111,10 +1114,11 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp, yyscan_t scanner)
 {
   YYUSE (yyvaluep);
   YYUSE (yylocationp);
+  YYUSE (scanner);
   if (!yymsg)
     yymsg = "Deleting";
   YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
@@ -1123,35 +1127,35 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
   switch (yytype)
     {
           case 3: /* NUM  */
-#line 48 "calc/parser.y" /* yacc.c:1257  */
+#line 52 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1131 "calc/parser.c" /* yacc.c:1257  */
+#line 1135 "calc/parser.c" /* yacc.c:1257  */
         break;
 
     case 4: /* VAR  */
-#line 42 "calc/parser.y" /* yacc.c:1257  */
+#line 46 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol named %s, position %lf %lf.\n", (*(symrec**)(&(*yyvaluep)))->name, (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1139 "calc/parser.c" /* yacc.c:1257  */
+#line 1143 "calc/parser.c" /* yacc.c:1257  */
         break;
 
     case 5: /* FNCT  */
-#line 45 "calc/parser.y" /* yacc.c:1257  */
+#line 49 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol named %s, position %lf %lf.\n", (*(symrec**)(&(*yyvaluep)))->name, (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1147 "calc/parser.c" /* yacc.c:1257  */
+#line 1151 "calc/parser.c" /* yacc.c:1257  */
         break;
 
     case 19: /* exp  */
-#line 48 "calc/parser.y" /* yacc.c:1257  */
+#line 52 "calc/parser.y" /* yacc.c:1257  */
       {
 	printf("discard symbol, position %lf %lf.\n", (*yylocationp).first_line, (*yylocationp).first_column); 
 }
-#line 1155 "calc/parser.c" /* yacc.c:1257  */
+#line 1159 "calc/parser.c" /* yacc.c:1257  */
         break;
 
 
@@ -1169,7 +1173,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
 `----------*/
 
 int
-yyparse (void)
+yyparse (yyscan_t scanner)
 {
 /* The lookahead symbol.  */
 int yychar;
@@ -1363,7 +1367,7 @@ yybackup:
   if (yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token: "));
-      yychar = yylex (&yylval, &yylloc);
+      yychar = yylex (&yylval, &yylloc, scanner);
     }
 
   if (yychar <= YYEOF)
@@ -1443,61 +1447,61 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 72 "calc/parser.y" /* yacc.c:1646  */
+#line 76 "calc/parser.y" /* yacc.c:1646  */
     { printf ("\t%.10g\n", (*(double*)(&yyvsp[-1]))); }
-#line 1449 "calc/parser.c" /* yacc.c:1646  */
+#line 1453 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 73 "calc/parser.y" /* yacc.c:1646  */
+#line 77 "calc/parser.y" /* yacc.c:1646  */
     { yyerror; }
-#line 1455 "calc/parser.c" /* yacc.c:1646  */
+#line 1459 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 77 "calc/parser.y" /* yacc.c:1646  */
+#line 81 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0]));	}
-#line 1461 "calc/parser.c" /* yacc.c:1646  */
+#line 1465 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 78 "calc/parser.y" /* yacc.c:1646  */
+#line 82 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(symrec**)(&yyvsp[0]))->value.var; }
-#line 1467 "calc/parser.c" /* yacc.c:1646  */
+#line 1471 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 79 "calc/parser.y" /* yacc.c:1646  */
+#line 83 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[0])); (*(symrec**)(&yyvsp[-2]))->value.var = (*(double*)(&yyvsp[0])); }
-#line 1473 "calc/parser.c" /* yacc.c:1646  */
+#line 1477 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 80 "calc/parser.y" /* yacc.c:1646  */
+#line 84 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*((*(symrec**)(&yyvsp[-3]))->value.fnctptr))((*(double*)(&yyvsp[-1]))); }
-#line 1479 "calc/parser.c" /* yacc.c:1646  */
+#line 1483 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 81 "calc/parser.y" /* yacc.c:1646  */
+#line 85 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) + (*(double*)(&yyvsp[0]));	}
-#line 1485 "calc/parser.c" /* yacc.c:1646  */
+#line 1489 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 82 "calc/parser.y" /* yacc.c:1646  */
+#line 86 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) - (*(double*)(&yyvsp[0]));	}
-#line 1491 "calc/parser.c" /* yacc.c:1646  */
+#line 1495 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 83 "calc/parser.y" /* yacc.c:1646  */
+#line 87 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-2])) * (*(double*)(&yyvsp[0]));	}
-#line 1497 "calc/parser.c" /* yacc.c:1646  */
+#line 1501 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 85 "calc/parser.y" /* yacc.c:1646  */
+#line 89 "calc/parser.y" /* yacc.c:1646  */
     {
 	if((*(double*)(&yyvsp[0])))
 	{
@@ -1509,29 +1513,29 @@ yyreduce:
 		fprintf(stderr, "%lf.%lf-%lf.%lf: division by zero\n", (yylsp[0]).first_line, (yylsp[0]).first_column, (yylsp[0]).last_line, (yylsp[0]).last_column);
 	}
 }
-#line 1513 "calc/parser.c" /* yacc.c:1646  */
+#line 1517 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 96 "calc/parser.y" /* yacc.c:1646  */
+#line 100 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = -(*(double*)(&yyvsp[0])); }
-#line 1519 "calc/parser.c" /* yacc.c:1646  */
+#line 1523 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 97 "calc/parser.y" /* yacc.c:1646  */
+#line 101 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = pow((*(double*)(&yyvsp[-2])), (*(double*)(&yyvsp[0]))); }
-#line 1525 "calc/parser.c" /* yacc.c:1646  */
+#line 1529 "calc/parser.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 98 "calc/parser.y" /* yacc.c:1646  */
+#line 102 "calc/parser.y" /* yacc.c:1646  */
     { (*(double*)(&yyval)) = (*(double*)(&yyvsp[-1])); }
-#line 1531 "calc/parser.c" /* yacc.c:1646  */
+#line 1535 "calc/parser.c" /* yacc.c:1646  */
     break;
 
 
-#line 1535 "calc/parser.c" /* yacc.c:1646  */
+#line 1539 "calc/parser.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1582,7 +1586,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (&yylloc, YY_("syntax error"));
+      yyerror (&yylloc, scanner, YY_("syntax error"));
 #else
 # define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
                                         yyssp, yytoken)
@@ -1609,7 +1613,7 @@ yyerrlab:
                 yymsgp = yymsg;
               }
           }
-        yyerror (&yylloc, yymsgp);
+        yyerror (&yylloc, scanner, yymsgp);
         if (yysyntax_error_status == 2)
           goto yyexhaustedlab;
       }
@@ -1633,7 +1637,7 @@ yyerrlab:
       else
         {
           yydestruct ("Error: discarding",
-                      yytoken, &yylval, &yylloc);
+                      yytoken, &yylval, &yylloc, scanner);
           yychar = YYEMPTY;
         }
     }
@@ -1690,7 +1694,7 @@ yyerrlab1:
 
       yyerror_range[1] = *yylsp;
       yydestruct ("Error: popping",
-                  yystos[yystate], yyvsp, yylsp);
+                  yystos[yystate], yyvsp, yylsp, scanner);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -1732,7 +1736,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (&yylloc, YY_("memory exhausted"));
+  yyerror (&yylloc, scanner, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -1744,7 +1748,7 @@ yyreturn:
          user semantic actions for why this is necessary.  */
       yytoken = YYTRANSLATE (yychar);
       yydestruct ("Cleanup: discarding lookahead",
-                  yytoken, &yylval, &yylloc);
+                  yytoken, &yylval, &yylloc, scanner);
     }
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYABORT or YYACCEPT.  */
@@ -1753,7 +1757,7 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-                  yystos[*yyssp], yyvsp, yylsp);
+                  yystos[*yyssp], yyvsp, yylsp, scanner);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -1766,7 +1770,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 100 "calc/parser.y" /* yacc.c:1906  */
+#line 104 "calc/parser.y" /* yacc.c:1906  */
 
 
 symrec *putsym(char const *sym_name, int sym_type)
@@ -1795,134 +1799,9 @@ symrec *getsym(char const *sym_name)
 }
 
 /* Called by yyparse on error.	*/ 
-void yyerror(YYLTYPE *llocp, char const *s)
+void yyerror(YYLTYPE *llocp, yyscan_t scanner, char const *s)
 {
 	fprintf(stderr, "yyerror: %s\n", s);
-}
-
-int yylex(YYSTYPE *lvalp, YYLTYPE *llocp)
-{
-	int c;
-
-	while((c = getchar()) == ' ' || c == '\t')
-	{
-		++llocp->last_column;
-	}
-
-	llocp->first_line = llocp->last_line;
-	llocp->first_column = llocp->last_column;
-
-	if(c == EOF)
-	{
-		return 0;
-	}
-
-	if(c == '.' || isdigit (c))
-	{
-		double decimalSize = 1;
-		int dcimalStartMark = 0;
-		if(c == '.') 
-		{
-			dcimalStartMark = 1;
-		}
-
-		double num = c - '0';
-		++llocp->last_column;
-		while(isdigit(c = getchar()) || c == '.')
-		{
-			if(dcimalStartMark == 1) 
-			{
-				decimalSize *= 10;
-			}
-
-			if(c == '.') {
-				dcimalStartMark = 1;
-				continue;
-			}
-
-			/* update location. */
-			++llocp->last_column;
-
-			num = num * 10 + c - '0';
-		}
-
-		lvalp->NUM = num / decimalSize;
-
-		ungetc(c, stdin);
-
-		return NUM;
-	}
-
-	if(isalpha (c))
-	{
-		/* Initially make the buffer long enough for a 40-character symbol name.	*/
-		static size_t length = 40; 
-		static char *symbuf = 0; 
-		symrec *s;
-		int i;
-		if(!symbuf)
-		{
-			symbuf = (char *) malloc (length + 1); 
-		}
-
-		i = 0;
-		do
-		{
-			/* If buffer is full, make it bigger.	*/ 
-			if(i == length)
-			{
-				length *= 2;
-				symbuf = (char *)realloc(symbuf, length + 1);
-			}
-
-			/* Add this character to the buffer.	*/ 
-			symbuf[i++] = c;
-
-			/* Get another character.	*/ 
-			c = getchar();
-
-			/* update location. */
-			++llocp->last_column;
-		}
-		while(isalnum(c));
-
-		ungetc(c, stdin); 
-		symbuf[i] = '\0';
-
-		/* try to find the symbol */
-		s = getsym(symbuf); 
-
-		/* push new symbol */
-		if(s == 0)
-		{
-			s = putsym(symbuf, VAR);
-		}
-
-		if(s->type == VAR)
-		{
-			lvalp->VAR = s;
-		}
-		else
-		{
-			lvalp->FNCT = s;
-		}
-		
-		return s->type;
-	}
-
-	/* update location. */
-	if(c == '\n')
-	{
-  	++llocp->last_line;
-  	llocp->last_column = 0;
-  }
-  else
-  {
-  	++llocp->last_column;
-  }
-
-	/* Any other character is a token by itself.	*/ 
-	return c;
 }
 
 struct init

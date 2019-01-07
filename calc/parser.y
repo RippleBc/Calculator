@@ -10,6 +10,8 @@
 
 %code requires {
 	#include "../common.h"
+
+	typedef void* yyscan_t;
 }
 
 %code provides {
@@ -21,11 +23,13 @@
 %define api.pure full
 %locations
 
+%param {yyscan_t scanner}
+
 %define api.value.type union
 
 %code {
-	int yylex(YYSTYPE *, YYLTYPE *);
-	void yyerror(YYLTYPE *, char const *);	
+	int yylex(YYSTYPE *, YYLTYPE *, yyscan_t);
+	void yyerror(YYLTYPE *, yyscan_t, char const *);	
 }
 
 %defines
@@ -125,134 +129,9 @@ symrec *getsym(char const *sym_name)
 }
 
 /* Called by yyparse on error.	*/ 
-void yyerror(YYLTYPE *llocp, char const *s)
+void yyerror(YYLTYPE *llocp, yyscan_t scanner, char const *s)
 {
 	fprintf(stderr, "yyerror: %s\n", s);
-}
-
-int yylex(YYSTYPE *lvalp, YYLTYPE *llocp)
-{
-	int c;
-
-	while((c = getchar()) == ' ' || c == '\t')
-	{
-		++llocp->last_column;
-	}
-
-	llocp->first_line = llocp->last_line;
-	llocp->first_column = llocp->last_column;
-
-	if(c == EOF)
-	{
-		return 0;
-	}
-
-	if(c == '.' || isdigit (c))
-	{
-		double decimalSize = 1;
-		int dcimalStartMark = 0;
-		if(c == '.') 
-		{
-			dcimalStartMark = 1;
-		}
-
-		double num = c - '0';
-		++llocp->last_column;
-		while(isdigit(c = getchar()) || c == '.')
-		{
-			if(dcimalStartMark == 1) 
-			{
-				decimalSize *= 10;
-			}
-
-			if(c == '.') {
-				dcimalStartMark = 1;
-				continue;
-			}
-
-			/* update location. */
-			++llocp->last_column;
-
-			num = num * 10 + c - '0';
-		}
-
-		lvalp->NUM = num / decimalSize;
-
-		ungetc(c, stdin);
-
-		return NUM;
-	}
-
-	if(isalpha (c))
-	{
-		/* Initially make the buffer long enough for a 40-character symbol name.	*/
-		static size_t length = 40; 
-		static char *symbuf = 0; 
-		symrec *s;
-		int i;
-		if(!symbuf)
-		{
-			symbuf = (char *) malloc (length + 1); 
-		}
-
-		i = 0;
-		do
-		{
-			/* If buffer is full, make it bigger.	*/ 
-			if(i == length)
-			{
-				length *= 2;
-				symbuf = (char *)realloc(symbuf, length + 1);
-			}
-
-			/* Add this character to the buffer.	*/ 
-			symbuf[i++] = c;
-
-			/* Get another character.	*/ 
-			c = getchar();
-
-			/* update location. */
-			++llocp->last_column;
-		}
-		while(isalnum(c));
-
-		ungetc(c, stdin); 
-		symbuf[i] = '\0';
-
-		/* try to find the symbol */
-		s = getsym(symbuf); 
-
-		/* push new symbol */
-		if(s == 0)
-		{
-			s = putsym(symbuf, VAR);
-		}
-
-		if(s->type == VAR)
-		{
-			lvalp->VAR = s;
-		}
-		else
-		{
-			lvalp->FNCT = s;
-		}
-		
-		return s->type;
-	}
-
-	/* update location. */
-	if(c == '\n')
-	{
-  	++llocp->last_line;
-  	llocp->last_column = 0;
-  }
-  else
-  {
-  	++llocp->last_column;
-  }
-
-	/* Any other character is a token by itself.	*/ 
-	return c;
 }
 
 struct init
